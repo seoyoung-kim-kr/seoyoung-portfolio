@@ -26,7 +26,7 @@ export default function Hero() {
         {/* Action Buttons */}
         <div className="flex flex-wrap items-center justify-center gap-3">
           <Link
-            href="/posts"
+            href="/projects"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-brand-muted hover:bg-brand-muted-hover text-brand-dark text-sm font-bold shadow-md hover:shadow-lg transition-all duration-200 active:scale-95 border border-brand-muted/50"
           >
             <span>Explore Projects</span>

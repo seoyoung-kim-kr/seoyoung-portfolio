@@ -17,21 +17,21 @@ export default function AboutMeSection() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 rounded-2xl">
         {/* Left Column */}
         <div className="space-y-3">
-          <div className="flex items-center gap-4">
-            <h3 className="text-sm font-bold text-brand-accent dark:text-brand-muted w-14">
+          <div className="grid grid-cols-[76px_1fr] sm:grid-cols-[80px_1fr] gap-3 sm:gap-4 items-center">
+            <h3 className="text-sm font-bold text-brand-accent dark:text-brand-muted">
               Name
             </h3>
-            <p className="text-base font-bold text-brand-dark dark:text-brand-light">
+            <p className="text-[15px] sm:text-base font-bold text-brand-dark dark:text-brand-light">
               {SITE_CONFIG.author.name}
             </p>
           </div>
-          <div className="flex items-center gap-4">
-            <h3 className="text-sm font-bold text-brand-accent dark:text-brand-muted w-14">
+          <div className="grid grid-cols-[76px_1fr] sm:grid-cols-[80px_1fr] gap-3 sm:gap-4 items-center">
+            <h3 className="text-sm font-bold text-brand-accent dark:text-brand-muted">
               Email
             </h3>
             <a
               href={`mailto:${SITE_CONFIG.author.email}`}
-              className="inline-flex items-center gap-1.5 text-base font-medium text-brand-dark dark:text-brand-light hover:text-brand-accent dark:hover:text-brand-muted hover:underline underline-offset-4 transition-colors"
+              className="inline-flex text-[15px] sm:text-base font-medium text-brand-dark dark:text-brand-light hover:text-brand-accent dark:hover:text-brand-muted hover:underline underline-offset-4 transition-colors break-all"
             >
               <span>{SITE_CONFIG.author.email}</span>
             </a>
@@ -40,23 +40,23 @@ export default function AboutMeSection() {
 
         {/* Right Column */}
         <div className="space-y-3">
-          <div className="flex items-center gap-4">
-            <h3 className="text-sm font-bold text-brand-accent dark:text-brand-muted w-20">
+          <div className="grid grid-cols-[76px_1fr] sm:grid-cols-[80px_1fr] gap-3 sm:gap-4 items-center">
+            <h3 className="text-sm font-bold text-brand-accent dark:text-brand-muted">
               Education
             </h3>
-            <p className="text-base font-medium text-brand-dark dark:text-brand-light">
+            <p className="text-[15px] sm:text-base font-medium text-brand-dark dark:text-brand-light break-keep">
               한신대학교 컴퓨터공학과
             </p>
           </div>
-          <div className="flex items-center gap-4">
-            <h3 className="text-sm font-bold text-brand-accent dark:text-brand-muted w-20">
+          <div className="grid grid-cols-[76px_1fr] sm:grid-cols-[80px_1fr] gap-3 sm:gap-4 items-center">
+            <h3 className="text-sm font-bold text-brand-accent dark:text-brand-muted">
               GitHub
             </h3>
             <a
               href={SITE_CONFIG.author.github}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 text-base font-medium text-brand-dark dark:text-brand-light hover:text-brand-accent dark:hover:text-brand-muted hover:underline underline-offset-4 transition-colors"
+              className="inline-flex text-[15px] sm:text-base font-medium text-brand-dark dark:text-brand-light hover:text-brand-accent dark:hover:text-brand-muted hover:underline underline-offset-4 transition-colors break-all"
             >
               <span>@seoyoung-kim-kr</span>
             </a>
