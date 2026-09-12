@@ -21,7 +21,8 @@ function PostContent({ post }: { post: PostData }) {
     path,
     title,
     date,
-    description,
+    startDate,
+    endDate,
     content,
     category,
     skills,
@@ -40,7 +41,7 @@ function PostContent({ post }: { post: PostData }) {
         <div className="flex items-center justify-end gap-2 max-w-3xl mx-auto">
           <button
             onClick={() => router.push(`/sy-admin/edit/${path}`)}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#ADC2A9]/40 hover:bg-[#ADC2A9]/70 text-[#2D3A2C] dark:text-[#FEF5ED] text-xs font-bold border border-[#ADC2A9]"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-brand-muted/40 hover:bg-brand-muted/70 text-brand-dark dark:text-brand-light text-xs font-bold border border-brand-muted"
           >
             <FiEdit2 className="w-3.5 h-3.5" />
             <span>Edit Project</span>
@@ -94,9 +95,16 @@ function PostContent({ post }: { post: PostData }) {
             {role ? ` · ${role}` : ""}
             {post.company ? ` @ ${post.company}` : ""}
           </div>
-          <time dateTime={date} className="text-[14px]">
-            {date}
-          </time>
+          <div className="text-[14px] flex items-center gap-1.5 mt-0.5">
+            <FaRegCalendarAlt className="w-3.5 h-3.5" />
+            {startDate ? (
+              <time>
+                {startDate} ~ {endDate || "진행 중"}
+              </time>
+            ) : (
+              <time dateTime={date}>{date}</time>
+            )}
+          </div>
         </div>
 
         {/* Quick Project Action Buttons */}
@@ -107,7 +115,7 @@ function PostContent({ post }: { post: PostData }) {
                 href={demoUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#ADC2A9] hover:bg-[#9BB397] text-[#2D3A2C] text-xs sm:text-sm font-bold shadow-sm transition-all active:scale-95"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-brand-muted hover:bg-brand-muted-hover text-brand-dark text-xs sm:text-sm font-bold shadow-sm transition-all active:scale-95"
               >
                 <FiExternalLink className="w-4 h-4" />
                 <span>Live Demo</span>
@@ -118,7 +126,7 @@ function PostContent({ post }: { post: PostData }) {
                 href={githubUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white dark:bg-[#1E271D] hover:bg-gray-50 dark:hover:bg-[#121712] text-slate-700 dark:text-slate-300 text-xs sm:text-sm font-bold border border-slate-200 dark:border-slate-700 shadow-sm transition-all active:scale-95"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white dark:bg-brand-dark-card hover:bg-gray-50 dark:hover:bg-brand-dark-base text-slate-700 dark:text-slate-300 text-xs sm:text-sm font-bold border border-slate-200 dark:border-slate-700 shadow-sm transition-all active:scale-95"
               >
                 <FiGithub className="w-4 h-4" />
                 <span>GitHub Repository</span>

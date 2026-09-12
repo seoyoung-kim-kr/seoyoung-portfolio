@@ -9,7 +9,9 @@ import {
 export type Post = {
   title: string;
   description: string;
-  date: string;
+  startDate?: string;
+  endDate?: string;
+  date?: string; // Legacy
   category: string;
   company?: string;
   path: string;
@@ -44,13 +46,14 @@ export async function getFeaturedPosts(): Promise<Post[]> {
 }
 
 export async function getPostData(fileName: string): Promise<PostData> {
+  const decodedFileName = decodeURIComponent(fileName);
   const posts = await getAllPosts();
-  const currentIndex = posts.findIndex((post) => post.path === fileName);
+  const currentIndex = posts.findIndex((post) => post.path === decodedFileName || post.path === fileName);
   const prev = posts[currentIndex + 1] ?? null;
   const next = posts[currentIndex - 1] ?? null;
 
   const sanityPost = await sanityFetch<any>(PROJECT_BY_SLUG_QUERY, {
-    slug: fileName,
+    slug: decodedFileName,
   });
 
   if (sanityPost) {
@@ -62,8 +65,8 @@ export async function getPostData(fileName: string): Promise<PostData> {
     };
   }
 
-  const post = posts.find((post) => post.path === fileName);
-  if (!post) throw new Error(`${fileName} not found`);
+  const post = posts.find((post) => post.path === decodedFileName || post.path === fileName);
+  if (!post) throw new Error(`${decodedFileName} not found`);
 
   return {
     ...post,

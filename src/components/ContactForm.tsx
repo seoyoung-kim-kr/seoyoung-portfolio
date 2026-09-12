@@ -50,7 +50,7 @@ export default function ContactForm() {
       <form onSubmit={handleSubmit} className="space-y-5 w-full">
         {/* Email */}
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="from" className="text-xs font-bold uppercase tracking-wider text-[#2D3A2C]/80 dark:text-[#FEF5ED]/80">
+          <label htmlFor="from" className="text-xs font-bold uppercase tracking-wider text-brand-dark/80 dark:text-brand-light/80">
             Your Email
           </label>
           <input
@@ -60,7 +60,7 @@ export default function ContactForm() {
             value={form.from}
             onChange={handleChange}
             placeholder="name@example.com"
-            className="w-full rounded-2xl bg-white/80 dark:bg-[#171E16]/80 border border-[#ADC2A9]/50 px-4 py-3 text-sm text-[#2D3A2C] dark:text-[#FEF5ED] placeholder:text-[#2D3A2C]/40 focus:outline-none focus:ring-2 focus:ring-[#ADC2A9] transition-all shadow-sm"
+            className="w-full rounded-2xl bg-white/80 dark:bg-brand-dark-bg/80 border border-brand-muted/50 px-4 py-3 text-sm text-brand-dark dark:text-brand-light placeholder:text-brand-dark/40 focus:outline-none focus:ring-2 focus:ring-brand-muted transition-all shadow-sm"
             required
             autoFocus
           />
@@ -68,7 +68,7 @@ export default function ContactForm() {
 
         {/* Subject */}
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="subject" className="text-xs font-bold uppercase tracking-wider text-[#2D3A2C]/80 dark:text-[#FEF5ED]/80">
+          <label htmlFor="subject" className="text-xs font-bold uppercase tracking-wider text-brand-dark/80 dark:text-brand-light/80">
             Subject
           </label>
           <input
@@ -78,14 +78,14 @@ export default function ContactForm() {
             value={form.subject}
             onChange={handleChange}
             placeholder="제목을 입력하세요"
-            className="w-full rounded-2xl bg-white/80 dark:bg-[#171E16]/80 border border-[#ADC2A9]/50 px-4 py-3 text-sm text-[#2D3A2C] dark:text-[#FEF5ED] placeholder:text-[#2D3A2C]/40 focus:outline-none focus:ring-2 focus:ring-[#ADC2A9] transition-all shadow-sm"
+            className="w-full rounded-2xl bg-white/80 dark:bg-brand-dark-bg/80 border border-brand-muted/50 px-4 py-3 text-sm text-brand-dark dark:text-brand-light placeholder:text-brand-dark/40 focus:outline-none focus:ring-2 focus:ring-brand-muted transition-all shadow-sm"
             required
           />
         </div>
 
         {/* Message */}
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="message" className="text-xs font-bold uppercase tracking-wider text-[#2D3A2C]/80 dark:text-[#FEF5ED]/80">
+          <label htmlFor="message" className="text-xs font-bold uppercase tracking-wider text-brand-dark/80 dark:text-brand-light/80">
             Message
           </label>
           <textarea
@@ -95,7 +95,7 @@ export default function ContactForm() {
             onChange={handleChange}
             rows={6}
             placeholder="내용을 입력하세요..."
-            className="w-full rounded-2xl bg-white/80 dark:bg-[#171E16]/80 border border-[#ADC2A9]/50 p-4 text-sm text-[#2D3A2C] dark:text-[#FEF5ED] placeholder:text-[#2D3A2C]/40 focus:outline-none focus:ring-2 focus:ring-[#ADC2A9] transition-all resize-none shadow-sm"
+            className="w-full rounded-2xl bg-white/80 dark:bg-brand-dark-bg/80 border border-brand-muted/50 p-4 text-sm text-brand-dark dark:text-brand-light placeholder:text-brand-dark/40 focus:outline-none focus:ring-2 focus:ring-brand-muted transition-all resize-none shadow-sm"
             required
           />
         </div>
@@ -103,7 +103,7 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3.5 px-6 rounded-full bg-[#ADC2A9] hover:bg-[#9BB397] text-[#2D3A2C] text-sm font-extrabold shadow-md hover:shadow-lg transition-all duration-200 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2 border border-[#ADC2A9]/60"
+          className="w-full py-3.5 px-6 rounded-full bg-brand-muted hover:bg-brand-muted-hover text-brand-dark text-sm font-extrabold shadow-md hover:shadow-lg transition-all duration-200 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2 border border-brand-muted/60"
         >
           <FiSend className="w-4 h-4" />
           <span>{loading ? "Sending..." : "Send Message"}</span>

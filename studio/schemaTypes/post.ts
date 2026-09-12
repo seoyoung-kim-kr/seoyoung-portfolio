@@ -42,13 +42,20 @@ export const post = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'date',
-      title: 'Date',
+      name: 'startDate',
+      title: 'Start Date',
       type: 'date',
       options: {
         dateFormat: 'YYYY-MM-DD',
       },
-      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'endDate',
+      title: 'End Date (Optional for ongoing)',
+      type: 'date',
+      options: {
+        dateFormat: 'YYYY-MM-DD',
+      },
     }),
     defineField({
       name: 'category',

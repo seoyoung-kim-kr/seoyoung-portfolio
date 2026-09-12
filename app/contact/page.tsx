@@ -8,7 +8,8 @@ import Container from "@/src/components/Container";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "프론트엔드 개발자 김서영과의 협업 문의 및 이메일 전송 페이지입니다.",
+  description:
+    "프론트엔드 개발자 김서영과의 협업 문의 및 이메일 전송 페이지입니다.",
 };
 
 const socialLinks: { href: string; label: string; Icon: IconType }[] = [

@@ -39,18 +39,18 @@ function MarkdownEditor({
 
   return (
     <div className="space-y-2">
-      <label className="block text-[10px] font-bold text-[#4B6346] dark:text-[#ADC2A9] uppercase tracking-wider">
+      <label className="block text-[10px] font-bold text-brand-accent dark:text-brand-muted uppercase tracking-wider">
         {label}
       </label>
-      <div className="rounded-2xl border border-[#ADC2A9]/30 dark:border-[#ADC2A9]/20 overflow-hidden shadow-sm">
+      <div className="rounded-2xl border border-brand-muted/30 dark:border-brand-muted/20 overflow-hidden shadow-sm">
         {/* Tab Header */}
-        <div className="flex items-center border-b border-[#ADC2A9]/30 bg-[#FEF5ED]/50 dark:bg-[#1E271D]/50">
+        <div className="flex items-center border-b border-brand-muted/30 bg-brand-light/50 dark:bg-brand-dark-card/50">
           <button
             type="button"
             onClick={() => setMode("write")}
             className={`flex items-center gap-1.5 px-5 py-3 text-sm font-bold transition-colors border-b-2 ${
               mode === "write"
-                ? "border-[#ADC2A9] text-[#2D3A2C] dark:text-[#FEF5ED] bg-white dark:bg-[#121712]"
+                ? "border-brand-muted text-brand-dark dark:text-brand-light bg-white dark:bg-brand-dark-base"
                 : "border-transparent text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
             }`}
           >
@@ -62,7 +62,7 @@ function MarkdownEditor({
             onClick={() => setMode("preview")}
             className={`flex items-center gap-1.5 px-5 py-3 text-sm font-bold transition-colors border-b-2 ${
               mode === "preview"
-                ? "border-[#ADC2A9] text-[#2D3A2C] dark:text-[#FEF5ED] bg-white dark:bg-[#121712]"
+                ? "border-brand-muted text-brand-dark dark:text-brand-light bg-white dark:bg-brand-dark-base"
                 : "border-transparent text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
             }`}
           >
@@ -72,14 +72,14 @@ function MarkdownEditor({
         </div>
 
         {/* Tab Content */}
-        <div className="bg-white dark:bg-[#121712]">
+        <div className="bg-white dark:bg-brand-dark-base">
           {mode === "write" ? (
             <TextareaAutosize
               minRows={minRows}
               value={value}
               onChange={(e) => onChange(e.target.value)}
               placeholder={placeholder}
-              className="w-full p-5 sm:p-6 bg-transparent font-mono text-sm leading-relaxed resize-none overflow-hidden outline-none placeholder:text-gray-300 dark:placeholder:text-gray-600 text-[#2D3A2C] dark:text-[#FEF5ED]"
+              className="w-full p-5 sm:p-6 bg-transparent font-mono text-sm leading-relaxed resize-none overflow-hidden outline-none placeholder:text-gray-300 dark:placeholder:text-gray-600 text-brand-dark dark:text-brand-light"
             />
           ) : (
             <div className="p-5 sm:p-6 min-h-[20vh]">
@@ -119,6 +119,10 @@ export default function ProjectEditor({ initialPost }: Props) {
   const [company, setCompany] = useState(initialPost?.company || "");
   const [role, setRole] = useState(initialPost?.role || "");
   const [content, setContent] = useState(initialPost?.content || "");
+  const [startDate, setStartDate] = useState(
+    initialPost?.startDate || new Date().toISOString().split("T")[0],
+  );
+  const [endDate, setEndDate] = useState(initialPost?.endDate || "");
 
   // Thumbnail State
   const [thumbnailPreview, setThumbnailPreview] = useState<string>(
@@ -265,7 +269,8 @@ export default function ProjectEditor({ initialPost }: Props) {
       title,
       slug: initialPost?.path || undefined,
       description,
-      date: initialPost?.date || new Date().toISOString().split("T")[0],
+      startDate,
+      endDate,
       category,
       company,
       featured,
@@ -299,7 +304,7 @@ export default function ProjectEditor({ initialPost }: Props) {
       );
 
       setTimeout(() => {
-        router.push("/posts");
+        router.push("/");
         router.refresh();
       }, 800);
     } catch (err: any) {
@@ -331,18 +336,18 @@ export default function ProjectEditor({ initialPost }: Props) {
 
   // Input field base style
   const inputCls =
-    "w-full px-3.5 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#1E271D] text-sm focus:outline-none focus:border-[#ADC2A9] transition-colors";
+    "w-full px-3.5 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-brand-dark-card text-sm focus:outline-none focus:border-brand-muted transition-colors";
   const labelCls =
-    "block text-xs font-bold mb-1.5 text-[#2D3A2C] dark:text-[#FEF5ED]";
+    "block text-xs font-bold mb-1.5 text-brand-dark dark:text-brand-light";
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#121712]">
+    <div className="min-h-screen bg-white dark:bg-brand-dark-base">
       {/* ─── Sticky Top Bar ─── */}
-      <div className="sticky top-0 z-50 bg-white/90 dark:bg-[#121712]/90 backdrop-blur-xl border-b border-[#ADC2A9]/30">
+      <div className="sticky top-0 z-50 bg-white/90 dark:bg-brand-dark-base/90 backdrop-blur-xl border-b border-brand-muted/30">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
           <button
             onClick={handleBack}
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#4B6346] dark:text-[#ADC2A9] hover:text-[#2D3A2C] dark:hover:text-[#FEF5ED] transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-accent dark:text-brand-muted hover:text-brand-dark dark:hover:text-brand-light transition-colors"
           >
             <FiArrowLeft className="w-4 h-4" />
             <span className="hidden sm:inline">돌아가기</span>
@@ -357,7 +362,7 @@ export default function ProjectEditor({ initialPost }: Props) {
             <button
               onClick={handleSubmit}
               disabled={submitting}
-              className="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-[#ADC2A9] hover:bg-[#9BB397] text-[#2D3A2C] text-sm font-bold shadow-sm transition-all active:scale-95 disabled:opacity-50"
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-brand-muted hover:bg-brand-muted-hover text-brand-dark text-sm font-bold shadow-sm transition-all active:scale-95 disabled:opacity-50"
             >
               {submitting ? (
                 "저장 중..."
@@ -392,9 +397,9 @@ export default function ProjectEditor({ initialPost }: Props) {
         )}
 
         {/* ─── 1. Title ─── */}
-        <div className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#1E271D]/60 border border-[#ADC2A9]/30 space-y-4">
+        <div className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-brand-dark-card/60 border border-brand-muted/30 space-y-4">
           <div>
-            <label className="block text-[10px] font-bold text-[#4B6346] dark:text-[#ADC2A9] uppercase tracking-wider mb-2">
+            <label className="block text-[10px] font-bold text-brand-accent dark:text-brand-muted uppercase tracking-wider mb-2">
               제목
             </label>
             <input
@@ -406,13 +411,13 @@ export default function ProjectEditor({ initialPost }: Props) {
                 markDirty();
               }}
               placeholder="포스트 제목을 입력하세요..."
-              className="w-full text-2xl sm:text-3xl font-extrabold bg-transparent border-b-2 border-[#ADC2A9]/30 focus:border-[#ADC2A9] outline-none placeholder:text-gray-300 dark:placeholder:text-gray-600 text-[#2D3A2C] dark:text-[#FEF5ED] tracking-tight pb-3 transition-colors"
+              className="w-full text-2xl sm:text-3xl font-extrabold bg-transparent border-b-2 border-brand-muted/30 focus:border-brand-muted outline-none placeholder:text-gray-300 dark:placeholder:text-gray-600 text-brand-dark dark:text-brand-light tracking-tight pb-3 transition-colors"
             />
           </div>
         </div>
 
         {/* ─── 2. Metadata (Exposed) ─── */}
-        <div className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#1E271D]/60 border border-[#ADC2A9]/30 space-y-6">
+        <div className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-brand-dark-card/60 border border-brand-muted/30 space-y-6">
           {/* Row 1: Category & Featured */}
           <div className="flex flex-wrap items-center gap-4">
             <div>
@@ -440,12 +445,41 @@ export default function ProjectEditor({ initialPost }: Props) {
                   setFeatured(e.target.checked);
                   markDirty();
                 }}
-                className="w-4 h-4 accent-[#ADC2A9]"
+                className="w-4 h-4 accent-brand-muted"
               />
-              <span className="text-xs font-bold text-[#2D3A2C] dark:text-[#FEF5ED]">
+              <span className="text-xs font-bold text-brand-dark dark:text-brand-light">
                 ⭐ 대표 프로젝트 (홈 화면 노출)
               </span>
             </label>
+          </div>
+
+          {/* Dates */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+            <div>
+              <label className={labelCls}>시작일 (필수)</label>
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) => {
+                  setStartDate(e.target.value);
+                  markDirty();
+                }}
+                className={inputCls}
+                required
+              />
+            </div>
+            <div>
+              <label className={labelCls}>종료일 (비워두면 '진행중')</label>
+              <input
+                type="date"
+                value={endDate}
+                onChange={(e) => {
+                  setEndDate(e.target.value);
+                  markDirty();
+                }}
+                className={inputCls}
+              />
+            </div>
           </div>
 
           {/* Row 2: Company, Skills, Role */}
@@ -523,11 +557,11 @@ export default function ProjectEditor({ initialPost }: Props) {
         </div>
 
         {/* ─── 3. Thumbnail Upload ─── */}
-        <div className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#1E271D]/60 border border-[#ADC2A9]/30">
-          <label className="block text-[10px] font-bold text-[#4B6346] dark:text-[#ADC2A9] uppercase tracking-wider mb-3">
+        <div className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-brand-dark-card/60 border border-brand-muted/30">
+          <label className="block text-[10px] font-bold text-brand-accent dark:text-brand-muted uppercase tracking-wider mb-3">
             썸네일 이미지
           </label>
-          <div className="flex flex-col sm:flex-row items-center gap-4 p-4 rounded-xl bg-gray-50 dark:bg-[#121712] border border-dashed border-[#ADC2A9]/30">
+          <div className="flex flex-col sm:flex-row items-center gap-4 p-4 rounded-xl bg-gray-50 dark:bg-brand-dark-base border border-dashed border-brand-muted/30">
             {thumbnailPreview ? (
               <div className="relative w-36 aspect-[16/10] rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 shrink-0 bg-gray-50">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -548,7 +582,7 @@ export default function ProjectEditor({ initialPost }: Props) {
               <p className="text-xs text-gray-500 dark:text-gray-400">
                 프로젝트 카드에 표시될 대표 이미지입니다.
               </p>
-              <label className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-[#ADC2A9] text-[#2D3A2C] hover:bg-[#9BB397] cursor-pointer transition-colors shadow-sm">
+              <label className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-brand-muted text-brand-dark hover:bg-brand-muted-hover cursor-pointer transition-colors shadow-sm">
                 <FiUploadCloud className="w-4 h-4" />
                 <span>{uploadingImage ? "업로드 중..." : "이미지 선택"}</span>
                 <input
@@ -564,10 +598,10 @@ export default function ProjectEditor({ initialPost }: Props) {
         </div>
 
         {/* ─── 4. Content Images (본문 이미지) ─── */}
-        <div className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#1E271D]/60 border border-[#ADC2A9]/30">
+        <div className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-brand-dark-card/60 border border-brand-muted/30">
           <div className="flex flex-wrap items-center justify-between mb-4 gap-2">
             <div>
-              <label className="block text-[10px] font-bold text-[#4B6346] dark:text-[#ADC2A9] uppercase tracking-wider">
+              <label className="block text-[10px] font-bold text-brand-accent dark:text-brand-muted uppercase tracking-wider">
                 본문 삽입용 이미지
               </label>
               <p className="text-xs text-gray-500 mt-1">
@@ -575,7 +609,7 @@ export default function ProjectEditor({ initialPost }: Props) {
                 붙여넣으세요.
               </p>
             </div>
-            <label className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-[#ADC2A9]/20 text-[#2D3A2C] dark:text-[#FEF5ED] hover:bg-[#ADC2A9]/40 cursor-pointer transition-colors">
+            <label className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-brand-muted/20 text-brand-dark dark:text-brand-light hover:bg-brand-muted/40 cursor-pointer transition-colors">
               <FiUploadCloud className="w-4 h-4" />
               <span>
                 {uploadingContentImage ? "업로드 중..." : "이미지 추가"}
@@ -592,7 +626,7 @@ export default function ProjectEditor({ initialPost }: Props) {
           </div>
 
           {contentImages.length === 0 ? (
-            <div className="text-center p-6 border border-dashed border-[#ADC2A9]/30 rounded-xl text-xs text-gray-400 bg-gray-50 dark:bg-[#121712]">
+            <div className="text-center p-6 border border-dashed border-brand-muted/30 rounded-xl text-xs text-gray-400 bg-gray-50 dark:bg-brand-dark-base">
               등록된 이미지가 없습니다.
             </div>
           ) : (
@@ -600,7 +634,7 @@ export default function ProjectEditor({ initialPost }: Props) {
               {contentImages.map((img, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center gap-3 p-3 border border-[#ADC2A9]/20 rounded-xl bg-gray-50 dark:bg-[#121712] shadow-sm"
+                  className="flex items-center gap-3 p-3 border border-brand-muted/20 rounded-xl bg-gray-50 dark:bg-brand-dark-base shadow-sm"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
@@ -620,7 +654,7 @@ export default function ProjectEditor({ initialPost }: Props) {
                         );
                         alert("마크다운이 클립보드에 복사되었습니다!");
                       }}
-                      className="text-[10px] font-bold px-2.5 py-1.5 bg-white dark:bg-[#1E271D] border border-[#ADC2A9]/40 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors flex items-center gap-1 text-[#2D3A2C] dark:text-[#FEF5ED]"
+                      className="text-[10px] font-bold px-2.5 py-1.5 bg-white dark:bg-brand-dark-card border border-brand-muted/40 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors flex items-center gap-1 text-brand-dark dark:text-brand-light"
                     >
                       <FiCopy className="w-3.5 h-3.5" />
                       마크다운 복사

@@ -28,12 +28,12 @@ export default function FilterablePosts({ posts, categories }: Props) {
   return (
     <Container className="space-y-8">
       {/* Title Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#ADC2A9]/30 pb-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-brand-muted/30 pb-6">
         <div className="space-y-1 text-center md:text-left">
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#2D3A2C] dark:text-[#FEF5ED]">
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-brand-dark dark:text-brand-light">
             Tech Retrospectives
           </h1>
-          <p className="text-[#2D3A2C]/70 dark:text-[#FEF5ED]/70 text-sm sm:text-base">
+          <p className="text-brand-dark/70 dark:text-brand-light/70 text-sm sm:text-base">
             실무 및 주요 프로젝트에서의 기술적 도전과 문제 해결 과정을 기록한 상세 회고 모음입니다.
           </p>
         </div>
@@ -42,7 +42,7 @@ export default function FilterablePosts({ posts, categories }: Props) {
         {isAdmin && (
           <Link
             href="/sy-admin/write"
-            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-[#ADC2A9] hover:bg-[#9BB397] text-[#2D3A2C] text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all active:scale-95 border border-[#ADC2A9]/60 shrink-0 self-center md:self-auto"
+            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-brand-muted hover:bg-brand-muted-hover text-brand-dark text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all active:scale-95 border border-brand-muted/60 shrink-0 self-center md:self-auto"
           >
             <FiPlus className="w-4 h-4" />
             <span>New Project</span>
@@ -55,7 +55,7 @@ export default function FilterablePosts({ posts, categories }: Props) {
         {/* Posts Grid (Left Side) */}
         <div className="flex-1 w-full min-w-0">
           {filtered.length === 0 ? (
-            <div className="py-16 text-center text-[#2D3A2C]/60 dark:text-[#FEF5ED]/60 font-medium">
+            <div className="py-16 text-center text-brand-dark/60 dark:text-brand-light/60 font-medium">
               해당 카테고리의 프로젝트가 존재하지 않습니다.
             </div>
           ) : (
@@ -65,12 +65,12 @@ export default function FilterablePosts({ posts, categories }: Props) {
 
         {/* Categories Sidebar (Right Side - Sticky on Desktop) */}
         <aside className="w-full md:w-56 lg:w-64 shrink-0 md:sticky md:top-24">
-          <div className="p-5 rounded-3xl bg-white/90 dark:bg-[#1E271D]/90 border border-[#ADC2A9]/40 dark:border-[#ADC2A9]/20 backdrop-blur-md shadow-sm space-y-4">
+          <div className="p-5 rounded-3xl bg-white/90 dark:bg-brand-dark-card/90 border border-brand-muted/40 dark:border-brand-muted/20 backdrop-blur-md shadow-sm space-y-4">
             <div className="flex items-center justify-between px-1">
-              <h2 className="text-xs font-extrabold text-[#4B6346] dark:text-[#ADC2A9] uppercase tracking-wider">
+              <h2 className="text-xs font-extrabold text-brand-accent dark:text-brand-muted uppercase tracking-wider">
                 Domains & Tech
               </h2>
-              <span className="text-[11px] font-semibold text-[#2D3A2C]/60 dark:text-[#FEF5ED]/60">
+              <span className="text-[11px] font-semibold text-brand-dark/60 dark:text-brand-light/60">
                 {filtered.length} items
               </span>
             </div>
