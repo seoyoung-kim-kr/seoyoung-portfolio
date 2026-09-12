@@ -15,26 +15,26 @@ export default function AdjacentPostCard({
 
   return (
     <Link
-      href={`/posts/${path}`}
-      className="group flex-1 min-w-0 w-full flex items-center gap-4 p-5 sm:p-6 rounded-2xl bg-white/80 dark:bg-[#1E271D]/80 border border-[#ADC2A9]/40 dark:border-[#ADC2A9]/20 backdrop-blur-md hover:bg-white dark:hover:bg-[#1E271D] shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
+      href={`/projects/${path}`}
+      className="group flex-1 min-w-0 w-full flex items-center gap-4 p-5 sm:p-6 rounded-2xl bg-white/80 dark:bg-brand-dark-card/80 border border-brand-muted/40 dark:border-brand-muted/20 backdrop-blur-md hover:bg-white dark:hover:bg-brand-dark-card shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
     >
       {isPrev && (
-        <div className="w-10 h-10 rounded-full bg-[#ADC2A9]/30 dark:bg-[#ADC2A9]/20 flex items-center justify-center text-[#2D3A2C] dark:text-[#FEF5ED] shrink-0 group-hover:-translate-x-1 transition-transform">
+        <div className="w-10 h-10 rounded-full bg-brand-muted/30 dark:bg-brand-muted/20 flex items-center justify-center text-brand-dark dark:text-brand-light shrink-0 group-hover:-translate-x-1 transition-transform">
           <FiArrowLeft className="w-5 h-5" />
         </div>
       )}
 
       <div className={`flex-1 min-w-0 ${isPrev ? "text-left" : "text-right"}`}>
-        <span className="text-xs font-bold text-[#4B6346] dark:text-[#ADC2A9] uppercase tracking-wider block mb-1">
+        <span className="text-xs font-bold text-brand-accent dark:text-brand-muted uppercase tracking-wider block mb-1">
           {isPrev ? "← Previous Post" : "Next Post →"}
         </span>
-        <h3 className="text-sm sm:text-base font-bold text-[#2D3A2C] dark:text-[#FEF5ED] truncate group-hover:text-[#4B6346] dark:group-hover:text-[#ADC2A9] transition-colors">
+        <h3 className="text-sm sm:text-base font-bold text-brand-dark dark:text-brand-light truncate group-hover:text-brand-accent dark:group-hover:text-brand-muted transition-colors">
           {title}
         </h3>
       </div>
 
       {!isPrev && (
-        <div className="w-10 h-10 rounded-full bg-[#ADC2A9]/30 dark:bg-[#ADC2A9]/20 flex items-center justify-center text-[#2D3A2C] dark:text-[#FEF5ED] shrink-0 group-hover:translate-x-1 transition-transform">
+        <div className="w-10 h-10 rounded-full bg-brand-muted/30 dark:bg-brand-muted/20 flex items-center justify-center text-brand-dark dark:text-brand-light shrink-0 group-hover:translate-x-1 transition-transform">
           <FiArrowRight className="w-5 h-5" />
         </div>
       )}

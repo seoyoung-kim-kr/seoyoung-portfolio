@@ -10,7 +10,7 @@ type Props = {
 export default function PostsGrid({ posts, variant = "home" }: Props) {
   if (variant === "blog") {
     return (
-      <div className="divide-y divide-[#ADC2A9]/30 dark:divide-[#ADC2A9]/20">
+      <div className="divide-y divide-brand-muted/30 dark:divide-brand-muted/20">
         {posts.map((post) => (
           <PostCard key={post.path} post={post} variant="blog" />
         ))}
@@ -19,10 +19,12 @@ export default function PostsGrid({ posts, variant = "home" }: Props) {
   }
 
   return (
-    <ul className="flex flex-col space-y-4 sm:space-y-6">
+    <ul className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
       {posts.map((post) => (
-        <li key={post.path}>
-          <PostCard key={post.path} post={post} variant="home" />
+        <li key={post.path} className="flex">
+          <div className="w-full h-full">
+            <PostCard key={post.path} post={post} variant="home" />
+          </div>
         </li>
       ))}
     </ul>

@@ -23,14 +23,14 @@ export default function BlogPostListItem({ post }: Props) {
   const router = useRouter();
 
   return (
-    <article className="group relative py-6 border-b border-[#ADC2A9]/30 dark:border-[#ADC2A9]/20 last:border-b-0 space-y-3">
+    <article className="group relative py-6 border-b border-brand-muted/30 dark:border-brand-muted/20 last:border-b-0 space-y-3">
       {/* Admin Action Buttons */}
       {isAdmin && (
-        <div className="absolute top-6 right-0 z-20 flex items-center gap-1.5 p-1 rounded-full bg-white/90 dark:bg-[#121712]/90 border border-[#ADC2A9]/50 shadow-md backdrop-blur-md">
+        <div className="absolute top-6 right-0 z-20 flex items-center gap-1.5 p-1 rounded-full bg-white/90 dark:bg-brand-dark-base/90 border border-brand-muted/50 shadow-md backdrop-blur-md">
           <button
             onClick={() => router.push(`/sy-admin/edit/${path}`)}
             title="프로젝트 수정"
-            className="p-1.5 rounded-full hover:bg-[#ADC2A9]/30 text-[#2D3A2C] dark:text-[#FEF5ED] transition-colors"
+            className="p-1.5 rounded-full hover:bg-brand-muted/30 text-brand-dark dark:text-brand-light transition-colors"
           >
             <FiEdit2 className="w-3.5 h-3.5" />
           </button>
@@ -47,21 +47,21 @@ export default function BlogPostListItem({ post }: Props) {
 
       {/* Top Header: Category, Date, Role */}
       <div className="flex items-center gap-3 text-xs flex-wrap pr-16 sm:pr-0">
-        <span className="px-2.5 py-0.5 rounded-full font-bold bg-[#FFC7C7]/40 text-[#2D3A2C] dark:text-[#FEF5ED] border border-[#FFC7C7]/60">
+        <span className="px-2.5 py-0.5 rounded-full font-bold bg-brand-pink/40 text-brand-dark dark:text-brand-light border border-brand-pink/60">
           {category}
         </span>
         {post.company && (
-          <span className="inline-flex items-center gap-1 font-semibold text-[#2D3A2C] dark:text-[#FEF5ED] bg-[#FFC7C7]/20 border border-[#FFC7C7]/40 px-2 py-0.5 rounded">
+          <span className="inline-flex items-center gap-1 font-semibold text-brand-dark dark:text-brand-light bg-brand-pink/20 border border-brand-pink/40 px-2 py-0.5 rounded">
             <span>🏢 {post.company}</span>
           </span>
         )}
-        <span className="flex items-center gap-1 text-[#2D3A2C]/60 dark:text-[#FEF5ED]/60 font-medium">
+        <span className="flex items-center gap-1 text-brand-dark/60 dark:text-brand-light/60 font-medium">
           <FiCalendar className="w-3.5 h-3.5" />
           <time dateTime={date}>{date}</time>
         </span>
         {role && (
-          <span className="inline-flex items-center gap-1 font-semibold text-[#4B6346] dark:text-[#ADC2A9] bg-[#ADC2A9]/15 dark:bg-[#ADC2A9]/10 px-2 py-0.5 rounded">
-            <FiUserCheck className="w-3 h-3 text-[#E57A7A]" />
+          <span className="inline-flex items-center gap-1 font-semibold text-brand-accent dark:text-brand-muted bg-brand-muted/15 dark:bg-brand-muted/10 px-2 py-0.5 rounded">
+            <FiUserCheck className="w-3 h-3 text-brand-pink-dark" />
             <span>{role}</span>
           </span>
         )}
@@ -69,14 +69,14 @@ export default function BlogPostListItem({ post }: Props) {
 
       {/* Title */}
       <Link href={`/posts/${path}`} className="block">
-        <h2 className="text-lg sm:text-xl font-bold text-[#2D3A2C] dark:text-[#FEF5ED] group-hover:text-[#4B6346] dark:group-hover:text-[#ADC2A9] transition-colors leading-snug">
+        <h2 className="text-lg sm:text-xl font-bold text-brand-dark dark:text-brand-light group-hover:text-brand-accent dark:group-hover:text-brand-muted transition-colors leading-snug">
           {title}
         </h2>
       </Link>
 
       {/* Short Description */}
       {post.content && (
-        <p className="text-sm sm:text-base text-[#2D3A2C]/75 dark:text-[#FEF5ED]/75 leading-relaxed line-clamp-2 font-normal">
+        <p className="text-sm sm:text-base text-brand-dark/75 dark:text-brand-light/75 leading-relaxed line-clamp-2 font-normal">
           {post.content.replace(/[#*`_[\]()>\-!]/g, "")}
         </p>
       )}
@@ -88,7 +88,7 @@ export default function BlogPostListItem({ post }: Props) {
             skills.map((skill) => (
               <span
                 key={skill}
-                className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#ADC2A9]/20 dark:bg-[#ADC2A9]/15 text-[#2D3A2C]/90 dark:text-[#FEF5ED]/90 border border-[#ADC2A9]/30"
+                className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-brand-muted/20 dark:bg-brand-muted/15 text-brand-dark/90 dark:text-brand-light/90 border border-brand-muted/30"
               >
                 {skill}
               </span>
@@ -97,7 +97,7 @@ export default function BlogPostListItem({ post }: Props) {
 
         <Link
           href={`/posts/${path}`}
-          className="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-[#4B6346] dark:text-[#ADC2A9] group-hover:translate-x-1 transition-transform self-start sm:self-auto"
+          className="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-brand-accent dark:text-brand-muted group-hover:translate-x-1 transition-transform self-start sm:self-auto"
         >
           <span>포스트 읽기</span>
           <FiArrowRight className="w-4 h-4" />
