@@ -56,7 +56,7 @@ export async function generateMetadata({ params }: Props) {
         title,
         description,
         type: "article",
-        url: `${SITE_CONFIG.url}/posts/${slug}`,
+        url: `${SITE_CONFIG.url}/projects/${slug}`,
         images: [
           {
             url: bannerSrc,

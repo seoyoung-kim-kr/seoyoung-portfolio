@@ -9,7 +9,9 @@ import {
 export type Post = {
   title: string;
   description: string;
-  date: string;
+  startDate?: string;
+  endDate?: string;
+  date?: string; // Legacy
   category: string;
   company?: string;
   path: string;

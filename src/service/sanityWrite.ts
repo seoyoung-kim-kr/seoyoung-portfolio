@@ -4,7 +4,8 @@ export type CreatePostInput = {
   title: string;
   slug?: string;
   description: string;
-  date?: string;
+  startDate?: string;
+  endDate?: string;
   category: string;
   company?: string;
   featured?: boolean;
@@ -57,7 +58,8 @@ export async function createSanityPost(input: CreatePostInput) {
     slug: { _type: "slug", current: slugValue },
     path: slugValue,
     description: input.description,
-    date: input.date || new Date().toISOString().split("T")[0],
+    startDate: input.startDate || new Date().toISOString().split("T")[0],
+    endDate: input.endDate || "",
     category: input.category || "frontend",
     company: input.company || "",
     featured: Boolean(input.featured),
@@ -106,7 +108,8 @@ export async function updateSanityPost(idOrSlug: string, input: Partial<CreatePo
   if (input.description !== undefined) setPatch.description = input.description;
   if (input.category !== undefined) setPatch.category = input.category;
   if (input.company !== undefined) setPatch.company = input.company;
-  if (input.date !== undefined) setPatch.date = input.date;
+  if (input.startDate !== undefined) setPatch.startDate = input.startDate;
+  if (input.endDate !== undefined) setPatch.endDate = input.endDate;
   if (input.featured !== undefined) setPatch.featured = Boolean(input.featured);
   if (input.skills !== undefined) setPatch.skills = input.skills;
   if (input.demoUrl !== undefined) setPatch.demoUrl = input.demoUrl;
@@ -136,7 +139,8 @@ export async function updateSanityPost(idOrSlug: string, input: Partial<CreatePo
       slug: input.slug || idOrSlug,
       description: input.description || "",
       category: input.category || "frontend",
-      date: input.date,
+      startDate: input.startDate,
+      endDate: input.endDate,
       company: input.company,
       featured: input.featured,
       skills: input.skills,

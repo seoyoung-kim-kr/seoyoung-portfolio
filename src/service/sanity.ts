@@ -30,11 +30,12 @@ export async function sanityFetch<T>(
 }
 
 export const ALL_PROJECTS_QUERY = `
-  *[_type == "post"] | order(date desc) {
+  *[_type == "post"] | order(startDate desc) {
     title,
     description,
     content,
-    date,
+    startDate,
+    endDate,
     category,
     company,
     "path": select(defined(slug.current) => slug.current, path),
@@ -48,11 +49,12 @@ export const ALL_PROJECTS_QUERY = `
 `;
 
 export const FEATURED_PROJECTS_QUERY = `
-  *[_type == "post" && featured == true] | order(date desc) {
+  *[_type == "post" && featured == true] | order(startDate desc) {
     title,
     description,
     content,
-    date,
+    startDate,
+    endDate,
     category,
     company,
     "path": select(defined(slug.current) => slug.current, path),
@@ -69,7 +71,8 @@ export const PROJECT_BY_SLUG_QUERY = `
   *[_type == "post" && (path == $slug || slug.current == $slug)][0] {
     title,
     description,
-    date,
+    startDate,
+    endDate,
     category,
     company,
     "path": select(defined(slug.current) => slug.current, path),
