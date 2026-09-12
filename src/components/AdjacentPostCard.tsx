@@ -26,7 +26,7 @@ export default function AdjacentPostCard({
 
       <div className={`flex-1 min-w-0 ${isPrev ? "text-left" : "text-right"}`}>
         <span className="text-xs font-bold text-brand-accent dark:text-brand-muted uppercase tracking-wider block mb-1">
-          {isPrev ? "← Previous Post" : "Next Post →"}
+          {isPrev ? "← Previous" : "Next →"}
         </span>
         <h3 className="text-sm sm:text-base font-bold text-brand-dark dark:text-brand-light truncate group-hover:text-brand-accent dark:group-hover:text-brand-muted transition-colors">
           {title}
