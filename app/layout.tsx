@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
 import { AdminProvider } from "@/src/context/AdminContext";
+import GlobalBackground from "@/src/components/GlobalBackground";
 import { SITE_CONFIG } from "@/src/constants/site";
 
 const inter = Inter({
@@ -100,7 +101,9 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-screen flex flex-col w-full bg-white dark:bg-[#121712] text-[#2D3A2C] dark:text-[#FEF5ED] transition-colors duration-300 antialiased selection:bg-[#FFC7C7] selection:text-[#2D3A2C]">
+      <body className="min-h-screen flex flex-col w-full bg-[#FCFCFC] dark:bg-brand-dark-base text-brand-dark dark:text-brand-light transition-colors duration-300 antialiased selection:bg-brand-pink selection:text-brand-dark relative">
+        <GlobalBackground />
+
         <AdminProvider>
           <Header />
           <main className="grow w-full">{children}</main>

@@ -9,10 +9,10 @@ import ThemeToggle from "./ThemeToggle";
 import {
   FiMenu,
   FiX,
-  FiHome,
   FiUser,
+  FiCode,
   FiLayers,
-  FiMail,
+  FiBriefcase,
   FiChevronRight,
 } from "react-icons/fi";
 
@@ -23,10 +23,18 @@ type Menu = {
 };
 
 const MENU_LIST: Menu[] = [
-  { label: "Home", href: "/", icon: <FiHome className="w-4 h-4" /> },
-  { label: "About", href: "/about", icon: <FiUser className="w-4 h-4" /> },
-  { label: "Retrospectives", href: "/posts", icon: <FiLayers className="w-4 h-4" /> },
-  { label: "Contact", href: "/contact", icon: <FiMail className="w-4 h-4" /> },
+  { label: "About", href: "/#about", icon: <FiUser className="w-4 h-4" /> },
+  { label: "Skills", href: "/#skills", icon: <FiCode className="w-4 h-4" /> },
+  {
+    label: "Projects",
+    href: "/#projects",
+    icon: <FiLayers className="w-4 h-4" />,
+  },
+  {
+    label: "Career",
+    href: "/#career",
+    icon: <FiBriefcase className="w-4 h-4" />,
+  },
 ];
 
 export default function Header() {
@@ -39,7 +47,7 @@ export default function Header() {
   }, [pathname]);
 
   return (
-    <header className="sticky top-0 z-50 w-full backdrop-blur-xl bg-white/90 dark:bg-[#121712]/90 border-b border-[#ADC2A9]/30 dark:border-[#ADC2A9]/20 transition-colors duration-300">
+    <header className="sticky top-0 z-50 w-full backdrop-blur-xl bg-white/90 dark:bg-brand-dark-base/90 border-b border-brand-muted/30 dark:border-brand-muted/20 transition-colors duration-300">
       <Container className="py-3 sm:py-3.5 flex items-center justify-between">
         {/* Brand Logo */}
         <Link href="/" className="group flex items-center gap-2 shrink-0">
@@ -50,8 +58,8 @@ export default function Header() {
             height={32}
             className="group-hover:scale-105 transition-transform duration-300 object-contain w-7 h-7 sm:w-8 sm:h-8"
           />
-          <h1 className="text-lg sm:text-xl font-bold tracking-tight text-[#2D3A2C] dark:text-[#FEF5ED] group-hover:text-[#4B6346] transition-colors">
-            Seoyoung<span className="text-[#FFC7C7]">.</span>
+          <h1 className="text-lg sm:text-xl font-bold tracking-tight text-brand-dark dark:text-brand-light group-hover:text-brand-accent transition-colors">
+            Seoyoung<span className="text-brand-pink">.</span>
           </h1>
         </Link>
 
@@ -68,9 +76,9 @@ export default function Header() {
                     <Link
                       href={menu.href}
                       className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 block ${
-                        isActive
-                          ? "bg-[#ADC2A9] text-[#2D3A2C] shadow-sm"
-                          : "text-[#2D3A2C]/80 dark:text-[#FEF5ED]/80 hover:text-[#2D3A2C] dark:hover:text-white hover:bg-[#ADC2A9]/20 dark:hover:bg-[#ADC2A9]/20"
+                        isActive && pathname === "/" // active 상태 처리를 해시 링크에 맞게 변경할 수 있으나, SPA 스크롤 스파이가 필요하므로 일단 스타일만 유지
+                          ? "text-brand-dark/80 dark:text-brand-light/80 hover:text-brand-dark dark:hover:text-white hover:bg-brand-muted/20 dark:hover:bg-brand-muted/20"
+                          : "text-brand-dark/80 dark:text-brand-light/80 hover:text-brand-dark dark:hover:text-white hover:bg-brand-muted/20 dark:hover:bg-brand-muted/20"
                       }`}
                     >
                       {menu.label}
@@ -80,7 +88,7 @@ export default function Header() {
               })}
             </ul>
           </nav>
-          <div className="w-px h-5 bg-[#ADC2A9]/30 dark:bg-[#ADC2A9]/20" />
+          <div className="w-px h-5 bg-brand-muted/30 dark:bg-brand-muted/20" />
           <ThemeToggle />
         </div>
 
@@ -89,13 +97,13 @@ export default function Header() {
           <ThemeToggle />
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 rounded-xl bg-[#ADC2A9]/20 text-[#2D3A2C] dark:text-[#FEF5ED] hover:bg-[#ADC2A9]/40 transition-colors focus:outline-none"
+            className="p-2 rounded-xl bg-brand-muted/20 text-brand-dark dark:text-brand-light hover:bg-brand-muted/40 transition-colors focus:outline-none"
             aria-label="Toggle Navigation Menu"
           >
             {isMobileMenuOpen ? (
-              <FiX className="w-5 h-5 text-[#E57A7A]" />
+              <FiX className="w-5 h-5 text-brand-pink-dark" />
             ) : (
-              <FiMenu className="w-5 h-5 text-[#2D3A2C] dark:text-[#FEF5ED]" />
+              <FiMenu className="w-5 h-5 text-brand-dark dark:text-brand-light" />
             )}
           </button>
         </div>
@@ -103,7 +111,7 @@ export default function Header() {
 
       {/* Mobile Drawer Dropdown Menu */}
       {isMobileMenuOpen && (
-        <div className="sm:hidden border-t border-[#ADC2A9]/20 bg-white/95 dark:bg-[#121712]/95 backdrop-blur-2xl shadow-xl animate-fade-in">
+        <div className="sm:hidden border-t border-brand-muted/20 bg-white/95 dark:bg-brand-dark-base/95 backdrop-blur-2xl shadow-xl animate-fade-in">
           <nav className="p-4 space-y-1.5">
             {MENU_LIST.map((menu) => {
               const isActive =
@@ -114,16 +122,10 @@ export default function Header() {
                   key={menu.href}
                   href={menu.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`flex items-center justify-between p-3 rounded-2xl text-sm font-bold transition-all duration-200 ${
-                    isActive
-                      ? "bg-[#ADC2A9] text-[#2D3A2C] shadow-md"
-                      : "text-[#2D3A2C]/80 dark:text-[#FEF5ED]/80 hover:bg-[#ADC2A9]/20 dark:hover:bg-[#ADC2A9]/10"
-                  }`}
+                  className={`flex items-center justify-between p-3 rounded-2xl text-sm font-bold transition-all duration-200 text-brand-dark/80 dark:text-brand-light/80 hover:bg-brand-muted/20 dark:hover:bg-brand-muted/10`}
                 >
                   <div className="flex items-center gap-3">
-                    <span className={isActive ? "text-[#2D3A2C]" : "text-[#8AA385]"}>
-                      {menu.icon}
-                    </span>
+                    <span className="text-brand-muted-alt">{menu.icon}</span>
                     <span>{menu.label}</span>
                   </div>
                   <FiChevronRight className="w-4 h-4 opacity-50" />

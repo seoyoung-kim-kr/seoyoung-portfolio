@@ -42,12 +42,12 @@ export default function ThemeToggle() {
     <button
       onClick={toggleTheme}
       aria-label="Toggle Theme"
-      className="p-2 rounded-full bg-[#ADC2A9]/20 dark:bg-[#ADC2A9]/30 text-[#2D3A2C] dark:text-[#FEF5ED] hover:bg-[#ADC2A9]/40 dark:hover:bg-[#ADC2A9]/50 transition-all duration-300 active:scale-90 border border-[#ADC2A9]/40 shadow-sm cursor-pointer"
+      className="p-2 rounded-full bg-brand-muted/20 dark:bg-brand-muted/30 text-brand-dark dark:text-brand-light hover:bg-brand-muted/40 dark:hover:bg-brand-muted/50 transition-all duration-300 active:scale-90 border border-brand-muted/40 shadow-sm cursor-pointer"
     >
       {theme === "dark" ? (
-        <FiSun className="w-4 h-4 transition-transform duration-300 rotate-0 hover:rotate-45 text-[#FFC7C7]" />
+        <FiSun className="w-4 h-4 transition-transform duration-300 rotate-0 hover:rotate-45 text-brand-pink" />
       ) : (
-        <FiMoon className="w-4 h-4 transition-transform duration-300 rotate-0 hover:-rotate-12 text-[#2D3A2C]" />
+        <FiMoon className="w-4 h-4 transition-transform duration-300 rotate-0 hover:-rotate-12 text-brand-dark" />
       )}
     </button>
   );
