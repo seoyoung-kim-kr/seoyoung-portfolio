@@ -68,18 +68,11 @@ export default function Header() {
           <nav>
             <ul className="flex items-center gap-1.5">
               {MENU_LIST.map((menu) => {
-                const isActive =
-                  pathname === menu.href ||
-                  (menu.href !== "/" && pathname.startsWith(menu.href));
                 return (
                   <li key={menu.href}>
                     <Link
                       href={menu.href}
-                      className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 block ${
-                        isActive && pathname === "/" // active 상태 처리를 해시 링크에 맞게 변경할 수 있으나, SPA 스크롤 스파이가 필요하므로 일단 스타일만 유지
-                          ? "text-brand-dark/80 dark:text-brand-light/80 hover:text-brand-dark dark:hover:text-white hover:bg-brand-muted/20 dark:hover:bg-brand-muted/20"
-                          : "text-brand-dark/80 dark:text-brand-light/80 hover:text-brand-dark dark:hover:text-white hover:bg-brand-muted/20 dark:hover:bg-brand-muted/20"
-                      }`}
+                      className="px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 block text-brand-dark/80 dark:text-brand-light/80 hover:text-brand-dark dark:hover:text-white hover:bg-brand-muted/20 dark:hover:bg-brand-muted/20"
                     >
                       {menu.label}
                     </Link>
@@ -114,9 +107,6 @@ export default function Header() {
         <div className="sm:hidden border-t border-brand-muted/20 bg-white/95 dark:bg-brand-dark-base/95 backdrop-blur-2xl shadow-xl animate-fade-in">
           <nav className="p-4 space-y-1.5">
             {MENU_LIST.map((menu) => {
-              const isActive =
-                pathname === menu.href ||
-                (menu.href !== "/" && pathname.startsWith(menu.href));
               return (
                 <Link
                   key={menu.href}
