@@ -40,11 +40,51 @@ const MENU_LIST: Menu[] = [
 export default function Header() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
   // Close mobile menu when pathname changes
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [pathname]);
+
+  // Scroll Spy Logic
+  useEffect(() => {
+    if (pathname !== "/") return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: "-20% 0px -70% 0px" }
+    );
+
+    const sections = document.querySelectorAll("section[id]");
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, [pathname]);
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    if (href.startsWith("/#") && pathname === "/") {
+      e.preventDefault();
+      const targetId = href.replace("/#", "");
+      const elem = document.getElementById(targetId);
+      if (elem) {
+        elem.scrollIntoView({ behavior: "smooth" });
+        window.history.pushState(null, "", href);
+      }
+      setIsMobileMenuOpen(false);
+    } else {
+      setIsMobileMenuOpen(false);
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full backdrop-blur-xl bg-white/90 dark:bg-brand-dark-base/90 border-b border-brand-muted/30 dark:border-brand-muted/20 transition-colors duration-300">
@@ -68,11 +108,17 @@ export default function Header() {
           <nav>
             <ul className="flex items-center gap-1.5">
               {MENU_LIST.map((menu) => {
+                const isActive = activeSection === menu.href.replace("/#", "");
                 return (
                   <li key={menu.href}>
                     <Link
                       href={menu.href}
-                      className="px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 block text-brand-dark/80 dark:text-brand-light/80 hover:text-brand-dark dark:hover:text-white hover:bg-brand-muted/20 dark:hover:bg-brand-muted/20"
+                      onClick={(e) => handleNavClick(e, menu.href)}
+                      className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 block ${
+                        isActive
+                          ? "text-brand-dark bg-brand-muted/40 dark:text-brand-light dark:bg-brand-muted/30"
+                          : "text-brand-dark/80 dark:text-brand-light/80 hover:text-brand-dark dark:hover:text-white hover:bg-brand-muted/20 dark:hover:bg-brand-muted/20"
+                      }`}
                     >
                       {menu.label}
                     </Link>
@@ -107,12 +153,17 @@ export default function Header() {
         <div className="sm:hidden border-t border-brand-muted/20 bg-white/95 dark:bg-brand-dark-base/95 backdrop-blur-2xl shadow-xl animate-fade-in">
           <nav className="p-4 space-y-1.5">
             {MENU_LIST.map((menu) => {
+              const isActive = activeSection === menu.href.replace("/#", "");
               return (
                 <Link
                   key={menu.href}
                   href={menu.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`flex items-center justify-between p-3 rounded-2xl text-sm font-bold transition-all duration-200 text-brand-dark/80 dark:text-brand-light/80 hover:bg-brand-muted/20 dark:hover:bg-brand-muted/10`}
+                  onClick={(e) => handleNavClick(e, menu.href)}
+                  className={`flex items-center justify-between p-3 rounded-2xl text-sm font-bold transition-all duration-200 ${
+                    isActive
+                      ? "text-brand-dark bg-brand-muted/40 dark:text-brand-light dark:bg-brand-muted/30"
+                      : "text-brand-dark/80 dark:text-brand-light/80 hover:bg-brand-muted/20 dark:hover:bg-brand-muted/10"
+                  }`}
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-brand-muted-alt">{menu.icon}</span>
