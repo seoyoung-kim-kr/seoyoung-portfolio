@@ -1,9 +1,5 @@
 import { NextResponse } from "next/server";
-
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "s21m3wpb";
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
-const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2024-01-01";
-const token = process.env.SANITY_API_TOKEN;
+import { SANITY_CONFIG } from "@/src/service/sanityConfig";
 
 export async function POST(req: Request) {
   try {
@@ -17,7 +13,7 @@ export async function POST(req: Request) {
       );
     }
 
-    if (!token) {
+    if (!SANITY_CONFIG.token) {
       return NextResponse.json(
         { success: false, message: ".env.local에 SANITY_API_TOKEN 이 설정되어 있지 않습니다." },
         { status: 400 }
@@ -27,7 +23,7 @@ export async function POST(req: Request) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    const url = `https://${projectId}.api.sanity.io/v${apiVersion}/assets/images/${dataset}?filename=${encodeURIComponent(
+    const url = `https://${SANITY_CONFIG.projectId}.api.sanity.io/v${SANITY_CONFIG.apiVersion}/assets/images/${SANITY_CONFIG.dataset}?filename=${encodeURIComponent(
       file.name
     )}`;
 
@@ -35,7 +31,7 @@ export async function POST(req: Request) {
       method: "POST",
       headers: {
         "Content-Type": file.type || "image/jpeg",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${SANITY_CONFIG.token}`,
       },
       body: buffer,
     });

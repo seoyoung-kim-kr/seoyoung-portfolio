@@ -1,6 +1,4 @@
-const PROJECT_ID = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "18bnd0j9";
-const DATASET = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
-const API_VERSION = "2024-01-01";
+import { SANITY_CONFIG } from "./sanityConfig";
 
 export async function sanityFetch<T>(
   query: string,
@@ -8,7 +6,7 @@ export async function sanityFetch<T>(
   revalidateSeconds: number = 60
 ): Promise<T | null> {
   try {
-    let url = `https://${PROJECT_ID}.api.sanity.io/v${API_VERSION}/data/query/${DATASET}?query=${encodeURIComponent(
+    let url = `https://${SANITY_CONFIG.projectId}.api.sanity.io/v${SANITY_CONFIG.apiVersion}/data/query/${SANITY_CONFIG.dataset}?query=${encodeURIComponent(
       query
     )}`;
 
@@ -83,16 +81,5 @@ export const PROJECT_BY_SLUG_QUERY = `
     role,
     content,
     "image": image.asset->url
-  }
-`;
-
-export const TECH_STACK_QUERY = `
-  *[_type == "techStack"] | order(order asc) {
-    "category": category,
-    "description": description,
-    "icon": icon,
-    "order": order,
-    "coreSkills": coreSkills,
-    "experiencedSkills": experiencedSkills
   }
 `;
