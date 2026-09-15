@@ -1,10 +1,6 @@
-import React from "react";
-import Link from "next/link";
-import { FiBriefcase, FiArrowRight, FiCheckCircle } from "react-icons/fi";
-
-type Props = {
-  hideAboutLink?: boolean;
-};
+import { FiBriefcase, FiCheckCircle } from "react-icons/fi";
+import GlassCard from "./GlassCard";
+import SectionHeader from "./SectionHeader";
 
 export const CAREER_TIMELINE = [
   {
@@ -31,20 +27,15 @@ export const CAREER_TIMELINE = [
   },
 ];
 
-export default function ExperienceSummary({ hideAboutLink = false }: Props) {
+export default function ExperienceSummary() {
   return (
-    <section className="p-6 sm:p-8 rounded-3xl bg-linear-to-br from-white/80 to-white/20 dark:from-brand-dark-card/80 dark:to-brand-dark-card/30 border border-white/80 dark:border-white/20 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.04),inset_0_2px_6px_rgba(255,255,255,1)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.2),inset_0_2px_6px_rgba(255,255,255,0.1)] transition-all hover:bg-white/50 dark:hover:bg-brand-dark-card/50 space-y-6">
+    <GlassCard className="p-6 sm:p-8 space-y-6">
       <div className="flex items-center justify-between border-b border-brand-muted/30 pb-4">
-        <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-2xl bg-brand-pink/40 text-brand-dark dark:text-brand-light">
-            <FiBriefcase className="w-5 h-5" />
-          </div>
-          <div>
-            <h2 className="text-xl font-bold text-brand-dark dark:text-brand-light">
-              Career Timeline
-            </h2>
-          </div>
-        </div>
+        <SectionHeader
+          icon={<FiBriefcase className="w-5 h-5" />}
+          title="Career Timeline"
+          iconBg="bg-brand-pink/40"
+        />
       </div>
 
       <div className="space-y-6 relative before:absolute before:inset-0 before:left-3.5 before:-translate-x-1/2 before:w-0.5 before:bg-brand-muted/30">
@@ -97,6 +88,6 @@ export default function ExperienceSummary({ hideAboutLink = false }: Props) {
           </div>
         ))}
       </div>
-    </section>
+    </GlassCard>
   );
 }

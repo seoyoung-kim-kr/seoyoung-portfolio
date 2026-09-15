@@ -1,6 +1,6 @@
-import React from "react";
 import { Post } from "../service/posts";
-import PostCard from "./PostCard";
+import HomePostCard from "./HomePostCard";
+import BlogPostListItem from "./BlogPostListItem";
 
 type Props = {
   posts: Post[];
@@ -12,7 +12,7 @@ export default function PostsGrid({ posts, variant = "home" }: Props) {
     return (
       <div className="divide-y divide-brand-muted/30 dark:divide-brand-muted/20">
         {posts.map((post) => (
-          <PostCard key={post.path} post={post} variant="blog" />
+          <BlogPostListItem key={post.path} post={post} />
         ))}
       </div>
     );
@@ -23,7 +23,7 @@ export default function PostsGrid({ posts, variant = "home" }: Props) {
       {posts.map((post) => (
         <li key={post.path} className="flex">
           <div className="w-full h-full">
-            <PostCard key={post.path} post={post} variant="home" />
+            <HomePostCard post={post} />
           </div>
         </li>
       ))}
