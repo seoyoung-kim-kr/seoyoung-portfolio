@@ -1,68 +1,77 @@
-import React from "react";
-import { FiUser, FiGithub, FiMail, FiBookOpen } from "react-icons/fi";
+import { FiUser } from "react-icons/fi";
 import { SITE_CONFIG } from "../constants/site";
+import GlassCard from "./GlassCard";
+import SectionHeader from "./SectionHeader";
+
+type InfoItem = {
+  label: string;
+  value: string;
+  href?: string;
+  external?: boolean;
+};
+
+const INFO_ITEMS: InfoItem[] = [
+  { label: "Name", value: SITE_CONFIG.author.name },
+  {
+    label: "Email",
+    value: SITE_CONFIG.author.email,
+    href: `mailto:${SITE_CONFIG.author.email}`,
+  },
+  { label: "Education", value: "한신대학교 컴퓨터공학과" },
+  {
+    label: "GitHub",
+    value: "@seoyoung-kim-kr",
+    href: SITE_CONFIG.author.github,
+    external: true,
+  },
+];
+
+function InfoRow({ label, value, href, external }: InfoItem) {
+  const valueCls =
+    "text-[15px] sm:text-base font-medium text-brand-dark dark:text-brand-light break-all";
+  const linkCls = `${valueCls} inline-flex hover:text-brand-accent dark:hover:text-brand-muted hover:underline underline-offset-4 transition-colors`;
+
+  return (
+    <div className="grid grid-cols-[76px_1fr] sm:grid-cols-[80px_1fr] gap-3 sm:gap-4 items-center">
+      <h3 className="text-sm font-bold text-brand-accent dark:text-brand-muted">
+        {label}
+      </h3>
+      {href ? (
+        <a
+          href={href}
+          {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
+          className={linkCls}
+        >
+          <span>{value}</span>
+        </a>
+      ) : (
+        <p className={`${valueCls} font-bold break-keep`}>{value}</p>
+      )}
+    </div>
+  );
+}
 
 export default function AboutMeSection() {
+  const mid = Math.ceil(INFO_ITEMS.length / 2);
+  const leftItems = INFO_ITEMS.slice(0, mid);
+  const rightItems = INFO_ITEMS.slice(mid);
+
   return (
-    <section className="p-6 sm:p-8 rounded-3xl bg-linear-to-br from-white/80 to-white/20 dark:from-brand-dark-card/80 dark:to-brand-dark-card/30 border border-white/80 dark:border-white/20 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.04),inset_0_2px_6px_rgba(255,255,255,1)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.2),inset_0_2px_6px_rgba(255,255,255,0.1)] transition-all hover:bg-white/50 dark:hover:bg-brand-dark-card/50 space-y-6">
-      <div className="flex items-center gap-3">
-        <div className="p-2.5 rounded-2xl bg-brand-muted/30 text-brand-dark dark:text-brand-light">
-          <FiUser className="w-5 h-5" />
-        </div>
-        <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-brand-dark dark:text-brand-light">
-          About Me
-        </h2>
-      </div>
+    <GlassCard className="p-6 sm:p-8 space-y-6">
+      <SectionHeader icon={<FiUser className="w-5 h-5" />} title="About Me" />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 rounded-2xl">
-        {/* Left Column */}
         <div className="space-y-3">
-          <div className="grid grid-cols-[76px_1fr] sm:grid-cols-[80px_1fr] gap-3 sm:gap-4 items-center">
-            <h3 className="text-sm font-bold text-brand-accent dark:text-brand-muted">
-              Name
-            </h3>
-            <p className="text-[15px] sm:text-base font-bold text-brand-dark dark:text-brand-light">
-              {SITE_CONFIG.author.name}
-            </p>
-          </div>
-          <div className="grid grid-cols-[76px_1fr] sm:grid-cols-[80px_1fr] gap-3 sm:gap-4 items-center">
-            <h3 className="text-sm font-bold text-brand-accent dark:text-brand-muted">
-              Email
-            </h3>
-            <a
-              href={`mailto:${SITE_CONFIG.author.email}`}
-              className="inline-flex text-[15px] sm:text-base font-medium text-brand-dark dark:text-brand-light hover:text-brand-accent dark:hover:text-brand-muted hover:underline underline-offset-4 transition-colors break-all"
-            >
-              <span>{SITE_CONFIG.author.email}</span>
-            </a>
-          </div>
+          {leftItems.map((item) => (
+            <InfoRow key={item.label} {...item} />
+          ))}
         </div>
-
-        {/* Right Column */}
         <div className="space-y-3">
-          <div className="grid grid-cols-[76px_1fr] sm:grid-cols-[80px_1fr] gap-3 sm:gap-4 items-center">
-            <h3 className="text-sm font-bold text-brand-accent dark:text-brand-muted">
-              Education
-            </h3>
-            <p className="text-[15px] sm:text-base font-medium text-brand-dark dark:text-brand-light break-keep">
-              한신대학교 컴퓨터공학과
-            </p>
-          </div>
-          <div className="grid grid-cols-[76px_1fr] sm:grid-cols-[80px_1fr] gap-3 sm:gap-4 items-center">
-            <h3 className="text-sm font-bold text-brand-accent dark:text-brand-muted">
-              GitHub
-            </h3>
-            <a
-              href={SITE_CONFIG.author.github}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex text-[15px] sm:text-base font-medium text-brand-dark dark:text-brand-light hover:text-brand-accent dark:hover:text-brand-muted hover:underline underline-offset-4 transition-colors break-all"
-            >
-              <span>@seoyoung-kim-kr</span>
-            </a>
-          </div>
+          {rightItems.map((item) => (
+            <InfoRow key={item.label} {...item} />
+          ))}
         </div>
       </div>
-    </section>
+    </GlassCard>
   );
 }

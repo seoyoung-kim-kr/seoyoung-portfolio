@@ -23,24 +23,24 @@ const socialLinks: { href: string; label: string; Icon: IconType }[] = [
 export default function ContactPage() {
   return (
     <Container className="max-w-2xl py-12 sm:py-16">
-      <div className="rounded-3xl bg-white/90 dark:bg-[#1E271D]/90 border border-[#ADC2A9]/40 dark:border-[#ADC2A9]/20 backdrop-blur-xl p-6 sm:p-10 shadow-xl space-y-8">
+      <div className="rounded-3xl bg-white/90 dark:bg-brand-dark-card/90 border border-brand-muted/40 dark:border-brand-muted/20 backdrop-blur-xl p-6 sm:p-10 shadow-xl space-y-8">
         {/* Header */}
         <div className="text-center space-y-3">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#FFC7C7]/40 text-[#2D3A2C] dark:text-[#FEF5ED] border border-[#FFC7C7]/60 shadow-sm">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-brand-pink/40 text-brand-dark dark:text-brand-light border border-brand-pink/60 shadow-sm">
             📬 Get In Touch
           </span>
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#2D3A2C] dark:text-[#FEF5ED]">
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-brand-dark dark:text-brand-light">
             Contact Me
           </h1>
-          <p className="text-sm text-[#2D3A2C]/70 dark:text-[#FEF5ED]/70 max-w-sm mx-auto">
+          <p className="text-sm text-brand-dark/70 dark:text-brand-light/70 max-w-sm mx-auto">
             질문이나 협업 문의, 메시지는 언제든지 편하게 보내주세요.
           </p>
 
           <a
             href="mailto:seoyoung.k.kr@gmail.com"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#ADC2A9]/20 hover:bg-[#ADC2A9]/40 text-[#2D3A2C] dark:text-[#FEF5ED] text-xs sm:text-sm font-bold transition-all border border-[#ADC2A9]/40"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-muted/20 hover:bg-brand-muted/40 text-brand-dark dark:text-brand-light text-xs sm:text-sm font-bold transition-all border border-brand-muted/40"
           >
-            <FiMail className="w-4 h-4 text-[#4B6346] dark:text-[#ADC2A9]" />
+            <FiMail className="w-4 h-4 text-brand-accent dark:text-brand-muted" />
             <span>seoyoung.k.kr@gmail.com</span>
           </a>
         </div>
@@ -53,18 +53,18 @@ export default function ContactPage() {
               href={href}
               target="_blank"
               aria-label={label}
-              className="p-3 rounded-2xl bg-[#ADC2A9]/20 hover:bg-[#ADC2A9] hover:text-[#2D3A2C] text-[#2D3A2C] dark:text-[#FEF5ED] transition-all duration-300 hover:scale-110 shadow-sm border border-[#ADC2A9]/30"
+              className="p-3 rounded-2xl bg-brand-muted/20 hover:bg-brand-muted hover:text-brand-dark text-brand-dark dark:text-brand-light transition-all duration-300 hover:scale-110 shadow-sm border border-brand-muted/30"
             >
               <Icon size={24} />
             </Link>
           ))}
         </div>
 
-        <div className="w-full h-px bg-[#ADC2A9]/30 dark:bg-[#ADC2A9]/20" />
+        <div className="w-full h-px bg-brand-muted/30 dark:bg-brand-muted/20" />
 
         {/* Form Container */}
         <div>
-          <h2 className="text-xl font-bold text-[#2D3A2C] dark:text-[#FEF5ED] mb-6 text-center">
+          <h2 className="text-xl font-bold text-brand-dark dark:text-brand-light mb-6 text-center">
             Send Me an Email
           </h2>
           <ContactForm />

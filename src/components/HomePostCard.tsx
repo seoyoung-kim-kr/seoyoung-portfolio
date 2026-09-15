@@ -1,22 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
 import type { Post } from "../service/posts";
 import Link from "next/link";
-import { useAdmin } from "../context/AdminContext";
-import { useDeleteProject } from "../hooks/useDeleteProject";
 import MarkdownViewer from "./MarkdownViewer";
+import GlassCard from "./GlassCard";
+import AdminActionButtons from "./AdminActionButtons";
+import SkillBadge from "./SkillBadge";
 import {
   FiCalendar,
   FiArrowUpRight,
   FiGithub,
   FiExternalLink,
-  FiEdit2,
-  FiTrash2,
-  FiUserCheck,
 } from "react-icons/fi";
 import { FaStar } from "react-icons/fa";
-import { useRouter } from "next/navigation";
 
 type Props = { post: Post & { content?: string } };
 
@@ -25,41 +21,20 @@ export default function HomePostCard({ post }: Props) {
     path,
     title,
     description,
-    content,
     startDate,
     endDate,
     skills,
     githubUrl,
     demoUrl,
   } = post;
-  const { isAdmin } = useAdmin();
-  const { deleteProject, deleting } = useDeleteProject();
-  const router = useRouter();
-
-  const hasFullContent = Boolean(content && content.trim());
 
   return (
-    <div className="group relative rounded-3xl bg-linear-to-br from-white/80 to-white/20 dark:from-brand-dark-card/80 dark:to-brand-dark-card/30 border border-white/80 dark:border-white/20 backdrop-blur-2xl p-5 sm:p-7 shadow-[0_8px_32px_rgba(0,0,0,0.04),inset_0_2px_6px_rgba(255,255,255,1)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.2),inset_0_2px_6px_rgba(255,255,255,0.1)] hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.06),inset_0_2px_6px_rgba(255,255,255,1)] transition-all duration-300 flex flex-col justify-between h-full space-y-4">
+    <GlassCard
+      hoverLift
+      className="group relative p-5 sm:p-7 flex flex-col justify-between h-full space-y-4"
+    >
       {/* Admin Action Buttons */}
-      {isAdmin && (
-        <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 p-1 rounded-full bg-white/90 dark:bg-brand-dark-base/90 border border-brand-muted/50 shadow-md backdrop-blur-md">
-          <button
-            onClick={() => router.push(`/sy-admin/edit/${path}`)}
-            title="프로젝트 수정"
-            className="p-1.5 rounded-full hover:bg-brand-muted/30 text-brand-dark dark:text-brand-light transition-colors"
-          >
-            <FiEdit2 className="w-3.5 h-3.5" />
-          </button>
-          <button
-            onClick={() => deleteProject(path, title)}
-            disabled={deleting}
-            title="프로젝트 삭제"
-            className="p-1.5 rounded-full hover:bg-red-100 text-red-500 transition-colors disabled:opacity-50"
-          >
-            <FiTrash2 className="w-3.5 h-3.5" />
-          </button>
-        </div>
-      )}
+      <AdminActionButtons path={path} title={title} variant="floating" />
 
       <div className="space-y-4">
         {/* Title and Date */}
@@ -95,12 +70,7 @@ export default function HomePostCard({ post }: Props) {
         <div className="flex flex-wrap gap-1.5">
           {skills &&
             skills.map((skill) => (
-              <span
-                key={skill}
-                className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-brand-muted/25 dark:bg-brand-muted/20 text-brand-dark dark:text-brand-light border border-brand-muted/40 hover:bg-brand-pink/50 dark:hover:bg-brand-pink/30 hover:border-brand-pink/60 transition-colors cursor-default"
-              >
-                {skill}
-              </span>
+              <SkillBadge key={skill} skill={skill} />
             ))}
         </div>
 
@@ -139,6 +109,6 @@ export default function HomePostCard({ post }: Props) {
           </Link>
         </div>
       </div>
-    </div>
+    </GlassCard>
   );
 }

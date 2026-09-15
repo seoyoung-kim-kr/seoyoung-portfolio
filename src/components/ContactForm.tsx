@@ -27,21 +27,19 @@ export default function ContactForm() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    sendContactEmail(form)
-      .then(() => {
-        toast.success("메일이 성공적으로 전송되었습니다.");
-        setForm(DEFAULT_DATA);
-      })
-      .catch((err) => {
-        toast.error(err?.message || "메일 전송에 실패했습니다.", {
-          style: {
-            whiteSpace: "pre-line",
-          },
-        });
-      })
-      .finally(() => {
-        setLoading(false);
+    try {
+      await sendContactEmail(form);
+      toast.success("메일이 성공적으로 전송되었습니다.");
+      setForm(DEFAULT_DATA);
+    } catch (err: any) {
+      toast.error(err?.message || "메일 전송에 실패했습니다.", {
+        style: {
+          whiteSpace: "pre-line",
+        },
       });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
