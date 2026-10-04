@@ -69,7 +69,7 @@ export default function SecretAdminPage() {
               <input
                 type="password"
                 required
-                placeholder="비밀번호 입력 (기본값: admin)"
+                placeholder="비밀번호 입력"
                 value={passcode}
                 onChange={(e) => {
                   setPasscode(e.target.value);
