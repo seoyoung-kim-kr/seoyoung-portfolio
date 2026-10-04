@@ -1,11 +1,8 @@
-import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
+import { apiOk } from "@/src/shared/lib/apiResponse";
+import { ADMIN_SESSION_COOKIE } from "@/src/features/admin/session";
 
 export async function POST() {
-  const response = NextResponse.json({ success: true });
-  response.cookies.set("seoyoung_admin_session", "", {
-    httpOnly: true,
-    expires: new Date(0),
-    path: "/",
-  });
-  return response;
+  (await cookies()).delete(ADMIN_SESSION_COOKIE);
+  return apiOk({});
 }

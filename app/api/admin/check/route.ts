@@ -1,13 +1,6 @@
-import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
+import { apiOk } from "@/src/shared/lib/apiResponse";
+import { isAdminSession } from "@/src/features/admin/session";
 
 export async function GET() {
-  const cookieStore = await cookies();
-  const session = cookieStore.get("seoyoung_admin_session");
-
-  if (session && session.value === "authenticated") {
-    return NextResponse.json({ isAdmin: true });
-  }
-
-  return NextResponse.json({ isAdmin: false });
+  return apiOk({ isAdmin: await isAdminSession() });
 }

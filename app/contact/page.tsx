@@ -2,9 +2,9 @@ import type { IconType } from "react-icons";
 import { FaGithub } from "react-icons/fa";
 import { FiMail } from "react-icons/fi";
 import Link from "next/link";
-import ContactForm from "@/src/components/ContactForm";
+import ContactForm from "@/src/features/contact/ContactForm";
 import type { Metadata } from "next";
-import Container from "@/src/components/Container";
+import Container from "@/src/shared/ui/Container";
 
 export const metadata: Metadata = {
   title: "Contact",

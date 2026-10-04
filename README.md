@@ -23,20 +23,23 @@ app/
   page.tsx                  홈 (About · Skills · Featured Projects · Career)
   projects/                 프로젝트 목록 · 상세 ([slug])
   contact/                  문의 폼
-  sy-admin/                 관리자 — 글 작성(write) · 수정(edit/[slug])
+  sy-admin/                 관리자 — 글 작성(write) · 수정(edit/[slug]) · 정렬(order)
   api/
     admin/                  관리자 세션 (login · logout · check)
-    posts/                  글 생성 · 수정 · 삭제 → Sanity Mutation API
-    upload/                 본문 이미지 업로드 → Sanity Asset
+    posts/                  글 생성 · 정렬 · 수정 · 삭제 → Sanity Mutation API
+    upload/                 이미지 업로드 → Sanity Asset
     contact/                문의 메일 발송
 src/
-  components/               화면 컴포넌트 (Hero, FeaturedPosts, MarkdownViewer, ProjectEditor …)
-  service/
-    sanity.ts               GROQ 쿼리 · 읽기 (ISR 60s)
-    sanityWrite.ts          쓰기 (Mutation API)
-    posts.ts                글 조회 · prev/next 계산
-    email.ts                Nodemailer 메일 전송 로직
-  context/AdminContext.tsx  관리자 모드 상태
+  features/                 기능(도메인) 단위 모듈
+    projects/               프로젝트 타입 · 조회(queries) · 쓰기(mutations) · 입력 스키마 · 카드/상세 UI
+    admin/                  관리자 세션 · Route 래퍼 · 클라이언트 API · 에디터 · 정렬 폼 · 가드
+    contact/                문의 폼 · 메일 발송
+    home/                   홈 섹션 (Hero, About, TechStack, Experience, ContactCTA)
+  shared/                   기능에 속하지 않는 공용 코드
+    lib/                    Sanity HTTP 클라이언트 · API 응답 규약/헬퍼
+    ui/                     Container, GlassCard, MarkdownViewer …
+    layout/                 Header, Footer, ThemeToggle, GlobalBackground
+    config/site.ts          사이트 메타 정보
 studio/                     Sanity Studio (schemaTypes: post, techStack)
 ```
 

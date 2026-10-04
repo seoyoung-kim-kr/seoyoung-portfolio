@@ -1,15 +1,16 @@
-import { MetadataRoute } from "next";
-import { getAllPosts } from "@/src/service/posts";
-import { SITE_CONFIG } from "@/src/constants/site";
+import type { MetadataRoute } from "next";
+import type { Project } from "@/src/features/projects/types";
+import { getAllProjects } from "@/src/features/projects/queries";
+import { SITE_CONFIG } from "@/src/shared/config/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = SITE_CONFIG.url;
 
-  // 동적 포스트 / 프로젝트 경로 가져오기
-  const posts = await getAllPosts().catch(() => []);
-  const postUrls = posts.map((post) => ({
-    url: `${baseUrl}/projects/${post.path}`,
-    lastModified: new Date(post.startDate || Date.now()),
+  // Sanity 조회 실패 시에도 정적 경로만으로 sitemap 을 생성합니다.
+  const projects: Project[] = await getAllProjects().catch(() => []);
+  const projectUrls: MetadataRoute.Sitemap = projects.map((project) => ({
+    url: `${baseUrl}/projects/${project.path}`,
+    lastModified: new Date(project.startDate || Date.now()),
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));
@@ -22,5 +23,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: route === "" ? 1.0 : 0.9,
   }));
 
-  return [...routes, ...postUrls];
+  return [...routes, ...projectUrls];
 }

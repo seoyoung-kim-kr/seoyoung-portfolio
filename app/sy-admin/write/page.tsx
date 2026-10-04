@@ -1,11 +1,10 @@
-"use client";
-
-import dynamic from "next/dynamic";
-
-const ProjectEditor = dynamic(() => import("@/src/components/ProjectEditor"), {
-  ssr: false,
-});
+import AdminGuard from "@/src/features/admin/AdminGuard";
+import ProjectEditor from "@/src/features/admin/ProjectEditor";
 
 export default function AdminWritePage() {
-  return <ProjectEditor />;
+  return (
+    <AdminGuard>
+      <ProjectEditor />
+    </AdminGuard>
+  );
 }
