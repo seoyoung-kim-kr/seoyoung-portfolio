@@ -17,7 +17,7 @@ const INFO_ITEMS: InfoItem[] = [
     value: SITE_CONFIG.author.email,
     href: `mailto:${SITE_CONFIG.author.email}`,
   },
-  { label: "Education", value: "한신대학교 컴퓨터공학과" },
+  { label: "Education", value: "수원여자대학교 / 한신대학교 컴퓨터공학과 (편입)" },
   {
     label: "GitHub",
     value: "@seoyoung-kim-kr",

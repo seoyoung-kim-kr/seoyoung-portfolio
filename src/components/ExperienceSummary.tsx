@@ -5,14 +5,14 @@ import SectionHeader from "./SectionHeader";
 export const CAREER_TIMELINE = [
   {
     company: "(주)썬더소프트코리아",
-    department: "SmartPlatform팀 (System SW 파트)",
-    role: "Software Engineer / Frontend Lead",
+    department: "System SW",
+    role: "Frontend Developer (전임)",
     period: "2023.01 ~ 현재",
     isCurrent: true,
     highlights: [
       "바닐라 JS 레거시 8개를 React/TS 단일 B2B 플랫폼으로 통합, FSD 아키텍처 및 공용 위젯 체계를 설계해 29개 페이지로 확장",
       "FastAPI로 공지 기능 API를 직접 설계·배포해 단독으로 E2E 릴리즈 완수",
-      "바닐라 JS 환경에서 27종 차트 대시보드 및 메일 리포팅 자동화 구축 => React 전환 프로젝트의 직접적 동기",
+      "바닐라 JS 환경에서 27종 차트 대시보드 및 메일 리포팅 자동화 구축 => React 전환 프로젝트로 이어짐",
     ],
   },
   {
