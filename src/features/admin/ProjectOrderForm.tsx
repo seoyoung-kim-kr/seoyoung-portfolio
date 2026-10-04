@@ -8,7 +8,13 @@ import { getErrorMessage } from "@/src/shared/lib/http";
 import { DEFAULT_PROJECT_ORDER, type Project } from "@/src/features/projects/types";
 import { adminApi } from "./adminApi";
 
-type OrderItem = Pick<Project, "_id" | "title"> & { order: number };
+type OrderItem = Pick<Project, "_id" | "title"> & {
+  /**
+   * 입력란에 표시되는 값. 입력 도중 빈 값("")을 허용해야 하므로 숫자로 바꾸지 않고 문자열로 보관하며,
+   * 저장할 때 parseOrder 로 변환합니다.
+   */
+  orderInput: string;
+};
 
 type Props = {
   /** order 순으로 정렬된 전체 프로젝트 */
@@ -19,8 +25,14 @@ function toOrderItems(projects: Project[]): OrderItem[] {
   return projects.map(({ _id, title, order }) => ({
     _id,
     title,
-    order: order ?? DEFAULT_PROJECT_ORDER,
+    orderInput: String(order ?? DEFAULT_PROJECT_ORDER),
   }));
+}
+
+/** 입력값을 정렬 순서로 변환합니다. 비어 있거나 숫자가 아니면 기본값으로 저장합니다. */
+function parseOrder(orderInput: string): number {
+  const parsed = Number.parseInt(orderInput, 10);
+  return Number.isNaN(parsed) ? DEFAULT_PROJECT_ORDER : parsed;
 }
 
 /** 프로젝트 정렬 순서(order) 일괄 편집 폼 */
@@ -28,20 +40,26 @@ export default function ProjectOrderForm({ projects }: Props) {
   const [items, setItems] = useState<OrderItem[]>(() => toOrderItems(projects));
   const [isSaving, setIsSaving] = useState<boolean>(false);
 
-  const changeOrder = (id: string, value: string) => {
-    const parsed = Number.parseInt(value, 10);
-    const order = Number.isNaN(parsed) ? DEFAULT_PROJECT_ORDER : parsed;
-    setItems((prev) => prev.map((item) => (item._id === id ? { ...item, order } : item)));
+  const changeOrderInput = (id: string, orderInput: string) => {
+    setItems((prev) => prev.map((item) => (item._id === id ? { ...item, orderInput } : item)));
   };
 
   const saveOrders = async () => {
     setIsSaving(true);
     try {
-      await adminApi.saveProjectOrders({
-        orders: items.map(({ _id, order }) => ({ id: _id, order })),
-      });
-      // 저장된 순서대로 목록을 다시 정렬합니다. (sort 는 안정 정렬이라 같은 order 끼리는 기존 순서 유지)
-      setItems((prev) => [...prev].sort((a, b) => a.order - b.order));
+      const orders: { id: string; order: number }[] = items.map(({ _id, orderInput }) => ({
+        id: _id,
+        order: parseOrder(orderInput),
+      }));
+      await adminApi.saveProjectOrders({ orders });
+
+      // 입력란을 실제 저장된 값으로 맞추고, 그 순서대로 다시 정렬합니다.
+      // (sort 는 안정 정렬이라 같은 order 끼리는 기존 순서가 유지됩니다.)
+      setItems((prev) =>
+        prev
+          .map((item) => ({ ...item, orderInput: String(parseOrder(item.orderInput)) }))
+          .sort((a, b) => Number(a.orderInput) - Number(b.orderInput))
+      );
       toast.success("정렬 순서가 저장되었습니다.");
     } catch (error) {
       toast.error(getErrorMessage(error, "저장 중 오류가 발생했습니다."));
@@ -78,15 +96,16 @@ export default function ProjectOrderForm({ projects }: Props) {
         </p>
 
         <ul className="space-y-3">
-          {items.map(({ _id, title, order }) => (
+          {items.map(({ _id, title, orderInput }) => (
             <li
               key={_id}
               className="flex items-center gap-4 p-4 rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-brand-dark-base"
             >
               <input
                 type="number"
-                value={order}
-                onChange={(e) => changeOrder(_id, e.target.value)}
+                value={orderInput}
+                onChange={(e) => changeOrderInput(_id, e.target.value)}
+                placeholder={String(DEFAULT_PROJECT_ORDER)}
                 aria-label={`${title} 정렬 순서`}
                 className="w-20 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-brand-dark-card text-center focus:outline-brand-muted"
               />

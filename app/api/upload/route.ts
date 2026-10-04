@@ -1,9 +1,9 @@
-import { apiError, apiOk } from "@/src/shared/lib/apiResponse";
+import { apiError, apiOk, readFormData } from "@/src/shared/lib/apiResponse";
 import { sanityUploadImage } from "@/src/shared/lib/sanity";
 import { adminRoute } from "@/src/features/admin/adminRoute";
 
 export const POST = adminRoute(async (req: Request) => {
-  const file = (await req.formData()).get("file");
+  const file = (await readFormData(req)).get("file");
 
   if (!(file instanceof File)) {
     return apiError("업로드할 파일이 없습니다.", 400);

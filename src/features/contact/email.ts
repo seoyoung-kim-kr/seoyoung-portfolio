@@ -3,15 +3,18 @@ import * as yup from "yup";
 
 /** 문의 메일 발송 (서버 전용) */
 
-export const contactSchema = yup.object({
-  from: yup
-    .string()
-    .trim()
-    .required("※ 이메일을 입력해주세요.")
-    .email("※ 이메일 형식이 올바르지 않습니다."),
-  subject: yup.string().trim().required("※ 제목을 입력해주세요."),
-  message: yup.string().trim().required("※ 내용을 입력해주세요."),
-});
+export const contactSchema = yup
+  .object({
+    from: yup
+      .string()
+      .trim()
+      .required("※ 이메일을 입력해주세요.")
+      .email("※ 이메일 형식이 올바르지 않습니다."),
+    subject: yup.string().trim().required("※ 제목을 입력해주세요."),
+    message: yup.string().trim().required("※ 내용을 입력해주세요."),
+  })
+  .typeError("※ 요청 본문은 JSON 객체여야 합니다.")
+  .nonNullable("※ 요청 본문은 JSON 객체여야 합니다.");
 
 export type ContactEmail = yup.InferType<typeof contactSchema>;
 
