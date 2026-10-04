@@ -1,82 +1,26 @@
-import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
-import { getPostData } from "@/src/service/posts";
-import { updateSanityPost, deleteSanityPost } from "@/src/service/sanityWrite";
+import { apiOk, readJsonBody } from "@/src/shared/lib/apiResponse";
+import { adminRoute } from "@/src/features/admin/adminRoute";
+import { deleteProject, updateProject } from "@/src/features/projects/mutations";
+import { parseBody, projectPatchSchema } from "@/src/features/projects/projectInput";
 
-export async function GET(
-  req: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const { id } = await params;
-    const post = await getPostData(id);
-    return NextResponse.json({ success: true, data: post });
-  } catch (error: any) {
-    return NextResponse.json(
-      { success: false, message: error.message || "Post not found" },
-      { status: 404 }
-    );
-  }
-}
+type Context = { params: Promise<{ id: string }> };
 
-export async function PUT(
-  req: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const { id } = await params;
-    const body = await req.json();
+/** 프로젝트 수정 (id 또는 slug) */
+export const PUT = adminRoute(async (req: Request, { params }: Context) => {
+  const { id } = await params;
+  const patch = await parseBody(projectPatchSchema, await readJsonBody(req));
+  await updateProject(id, patch);
 
-    // 1. Update Sanity CMS
-    let updatedPost;
-    try {
-      updatedPost = await updateSanityPost(id, body);
-    } catch (sanityErr) {
-      console.error("Sanity update warning:", sanityErr);
-    }
+  revalidatePath("/", "layout");
+  return apiOk({});
+});
 
-    // 2. Purge Next.js cache for instant UI update
-    revalidatePath("/", "layout");
-    revalidatePath("/posts", "layout");
-    revalidatePath("/about", "layout");
-    revalidatePath(`/posts/${id}`, "layout");
-    if (body.slug && body.slug !== id) {
-      revalidatePath(`/posts/${body.slug}`, "layout");
-    }
+/** 프로젝트 삭제 (id 또는 slug) */
+export const DELETE = adminRoute(async (_req: Request, { params }: Context) => {
+  const { id } = await params;
+  await deleteProject(id);
 
-    return NextResponse.json({ success: true, data: updatedPost || { id } });
-  } catch (error: any) {
-    return NextResponse.json(
-      { success: false, message: error.message || "Failed to update post" },
-      { status: 500 }
-    );
-  }
-}
-
-export async function DELETE(
-  req: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const { id } = await params;
-
-    // Sanity deletion
-    try {
-      await deleteSanityPost(id);
-    } catch (e) {
-      console.error("Sanity delete warning:", e);
-    }
-
-    // Purge Next.js cache
-    revalidatePath("/", "layout");
-    revalidatePath("/posts", "layout");
-    revalidatePath(`/posts/${id}`, "layout");
-
-    return NextResponse.json({ success: true });
-  } catch (error: any) {
-    return NextResponse.json(
-      { success: false, message: error.message || "Failed to delete post" },
-      { status: 500 }
-    );
-  }
-}
+  revalidatePath("/", "layout");
+  return apiOk({});
+});

@@ -113,5 +113,12 @@ export const post = defineType({
       type: 'text',
       rows: 15,
     }),
+    defineField({
+      name: 'order',
+      title: 'Sort Order',
+      type: 'number',
+      description: '낮은 숫자가 먼저 표시됩니다. (기본 99)',
+      initialValue: 99,
+    }),
   ],
 })

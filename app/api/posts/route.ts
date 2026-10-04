@@ -1,43 +1,27 @@
-import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
-import { getAllPosts } from "@/src/service/posts";
-import { createSanityPost } from "@/src/service/sanityWrite";
+import { apiOk, readJsonBody } from "@/src/shared/lib/apiResponse";
+import { adminRoute } from "@/src/features/admin/adminRoute";
+import { createProject, updateProjectOrders } from "@/src/features/projects/mutations";
+import {
+  parseBody,
+  projectInputSchema,
+  projectOrderSchema,
+} from "@/src/features/projects/projectInput";
 
-export async function GET() {
-  try {
-    const posts = await getAllPosts();
-    return NextResponse.json({ success: true, data: posts });
-  } catch (error: any) {
-    return NextResponse.json(
-      { success: false, message: error.message || "Failed to fetch posts" },
-      { status: 500 }
-    );
-  }
-}
+/** 프로젝트 생성 */
+export const POST = adminRoute(async (req: Request) => {
+  const input = await parseBody(projectInputSchema, await readJsonBody(req));
+  const created = await createProject(input);
 
-export async function POST(req: Request) {
-  try {
-    const body = await req.json();
+  revalidatePath("/", "layout");
+  return apiOk(created, { status: 201 });
+});
 
-    if (!body.title || !body.description || !body.category) {
-      return NextResponse.json(
-        { success: false, message: "Missing required fields (title, description, category)" },
-        { status: 400 }
-      );
-    }
+/** 프로젝트 정렬 순서 일괄 저장 */
+export const PATCH = adminRoute(async (req: Request) => {
+  const input = await parseBody(projectOrderSchema, await readJsonBody(req));
+  await updateProjectOrders(input);
 
-    const createdPost = await createSanityPost(body);
-
-    // Immediately purge Next.js Data Cache for instant UI update
-    revalidatePath("/", "layout");
-    revalidatePath("/posts", "layout");
-    revalidatePath("/about", "layout");
-
-    return NextResponse.json({ success: true, data: createdPost }, { status: 201 });
-  } catch (error: any) {
-    return NextResponse.json(
-      { success: false, message: error.message || "Failed to create post" },
-      { status: 500 }
-    );
-  }
-}
+  revalidatePath("/", "layout");
+  return apiOk({});
+});

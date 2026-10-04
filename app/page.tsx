@@ -1,12 +1,12 @@
-import Container from "@/src/components/Container";
-import Hero from "@/src/components/Hero";
-import AboutMeSection from "@/src/components/AboutMeSection";
-import TechStackSection from "@/src/components/TechStackSection";
-import FeaturedPosts from "@/src/components/FeaturedPosts";
-import ExperienceSummary from "@/src/components/ExperienceSummary";
-import ContactCTA from "@/src/components/ContactCTA";
+import Container from "@/src/shared/ui/Container";
+import Hero from "@/src/features/home/Hero";
+import AboutMeSection from "@/src/features/home/AboutMeSection";
+import TechStackSection from "@/src/features/home/TechStackSection";
+import ExperienceSummary from "@/src/features/home/ExperienceSummary";
+import ContactCTA from "@/src/features/home/ContactCTA";
+import ProjectsSection from "@/src/features/projects/ProjectsSection";
 
-export default async function HomePage() {
+export default function HomePage() {
   return (
     <>
       <Hero />
@@ -23,7 +23,7 @@ export default async function HomePage() {
 
         {/* 3. Featured Projects Showcase */}
         <section id="projects" className="scroll-mt-24">
-          <FeaturedPosts />
+          <ProjectsSection />
         </section>
 
         {/* 4. Career Timeline */}

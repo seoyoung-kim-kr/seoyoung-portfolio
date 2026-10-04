@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Header from "@/src/components/Header";
-import Footer from "@/src/components/Footer";
-import { AdminProvider } from "@/src/context/AdminContext";
-import GlobalBackground from "@/src/components/GlobalBackground";
-import { SITE_CONFIG } from "@/src/constants/site";
+import { Toaster } from "sonner";
+import Header from "@/src/shared/layout/Header";
+import Footer from "@/src/shared/layout/Footer";
+import GlobalBackground from "@/src/shared/layout/GlobalBackground";
+import { SITE_CONFIG } from "@/src/shared/config/site";
+import { AdminProvider } from "@/src/features/admin/AdminContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -109,6 +110,7 @@ export default function RootLayout({
           <main className="grow w-full">{children}</main>
           <Footer />
         </AdminProvider>
+        <Toaster position="top-center" richColors />
       </body>
     </html>
   );
