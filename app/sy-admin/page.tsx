@@ -129,11 +129,11 @@ export default function SecretAdminPage() {
               </Link>
 
               <Link
-                href="/posts"
+                href="/sy-admin/order"
                 className="flex items-center justify-center gap-2 p-4 rounded-2xl bg-white dark:bg-brand-dark-base hover:bg-gray-50 dark:hover:bg-gray-800 text-brand-dark dark:text-brand-light font-bold text-sm border border-gray-200 dark:border-gray-700 transition-all active:scale-95 shadow-sm"
               >
                 <FiLayers className="w-4 h-4 text-brand-muted" />
-                <span>프로젝트 목록 관리</span>
+                <span>프로젝트 정렬 관리</span>
                 <FiArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>

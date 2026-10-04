@@ -1,6 +1,7 @@
 import { SANITY_CONFIG, getSanityMutateUrl, getSanityApiUrl } from "./sanityConfig";
 
 export type CreatePostInput = {
+  order?: number;
   title: string;
   slug?: string;
   description: string;
@@ -55,6 +56,7 @@ export async function createSanityPost(input: CreatePostInput) {
   const doc: Record<string, any> = {
     _type: "post",
     title: input.title,
+    order: input.order ?? 99,
     slug: { _type: "slug", current: slugValue },
     path: slugValue,
     description: input.description,
@@ -116,6 +118,7 @@ export async function updateSanityPost(idOrSlug: string, input: Partial<CreatePo
   if (input.githubUrl !== undefined) setPatch.githubUrl = input.githubUrl;
   if (input.role !== undefined) setPatch.role = input.role;
   if (input.content !== undefined) setPatch.content = input.content;
+  if (input.order !== undefined) setPatch.order = input.order;
 
   if (input.assetId) {
     setPatch.image = {

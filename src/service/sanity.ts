@@ -28,7 +28,9 @@ export async function sanityFetch<T>(
 }
 
 export const ALL_PROJECTS_QUERY = `
-  *[_type == "post"] | order(startDate desc) {
+  *[_type == "post"] | order(order asc, startDate desc) {
+    _id,
+    order,
     title,
     description,
     content,
@@ -47,7 +49,9 @@ export const ALL_PROJECTS_QUERY = `
 `;
 
 export const FEATURED_PROJECTS_QUERY = `
-  *[_type == "post" && featured == true] | order(startDate desc) {
+  *[_type == "post" && featured == true] | order(order asc, startDate desc) {
+    _id,
+    order,
     title,
     description,
     content,
