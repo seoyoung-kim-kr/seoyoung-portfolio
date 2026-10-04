@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# seoyoung-portfolio
 
-## Getting Started
+프론트엔드 개발자 김서영의 포트폴리오 사이트.
+프로젝트 글을 코드 배포 없이 수정할 수 있도록 Sanity를 콘텐츠 저장소로 두고, 사이트 안에 전용 관리자 페이지를 만들어 Studio 없이도 글을 쓰고 고칠 수 있게 구성했습니다.
 
-First, run the development server:
+**Live** — https://portfolio.seoyoung.dev
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Stack
+
+| 영역      | 사용 기술                                                        |
+| --------- | ---------------------------------------------------------------- |
+| Framework | Next.js 16 (App Router), React 19, TypeScript                    |
+| Styling   | Tailwind CSS v4, `@tailwindcss/typography`                       |
+| Content   | Sanity (프로젝트 글 · 기술 스택), `studio/`에 Sanity Studio 포함 |
+| Markdown  | react-markdown + remark-gfm + react-syntax-highlighter           |
+| Contact   | Nodemailer (Route Handler에서 메일 발송)                         |
+| Deploy    | Vercel                                                           |
+
+## 구조
+
+```
+app/
+  page.tsx                  홈 (About · Skills · Featured Projects · Career)
+  projects/                 프로젝트 목록 · 상세 ([slug])
+  contact/                  문의 폼
+  sy-admin/                 관리자 — 글 작성(write) · 수정(edit/[slug])
+  api/
+    admin/                  관리자 세션 (login · logout · check)
+    posts/                  글 생성 · 수정 · 삭제 → Sanity Mutation API
+    upload/                 본문 이미지 업로드 → Sanity Asset
+    contact/                문의 메일 발송
+src/
+  components/               화면 컴포넌트 (Hero, FeaturedPosts, MarkdownViewer, ProjectEditor …)
+  service/
+    sanity.ts               GROQ 쿼리 · 읽기 (ISR 60s)
+    sanityWrite.ts          쓰기 (Mutation API)
+    posts.ts                글 조회 · prev/next 계산
+    email.ts                Nodemailer 메일 전송 로직
+  context/AdminContext.tsx  관리자 모드 상태
+studio/                     Sanity Studio (schemaTypes: post, techStack)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 설계 메모
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **콘텐츠와 코드 분리** — 프로젝트 글, 기술 스택은 전부 Sanity 문서. 글을 고치는 일에 배포가 필요 없도록 했습니다.
+- **사이트 내장 관리자** — Sanity Studio를 매번 띄우지 않고도 사이트 안에서 글을 쓰고 고칠 수 있게 `sy-admin`을 두었습니다. 관리자 세션은 httpOnly 쿠키, 쓰기는 서버 Route Handler에서만 Sanity 토큰을 사용합니다. 토큰이 클라이언트에 노출되지 않습니다.
+- **ISR** — 읽기 쿼리는 60초 revalidate. 글을 고치면 1분 안에 반영됩니다.
+- **본문 이미지** — 관리자 에디터에서 업로드하면 Sanity Asset으로 올라가고, 마크다운 이미지 태그를 돌려받아 본문에 붙여 넣는 흐름입니다.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 로컬 실행
 
-## Learn More
+```bash
+# 사이트
+npm install
+npm run dev          # http://localhost:3000
 
-To learn more about Next.js, take a look at the following resources:
+# Sanity Studio
+cd studio
+npm install
+npm run dev          # http://localhost:3333
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`.env.local`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+NEXT_PUBLIC_SANITY_PROJECT_ID=
+NEXT_PUBLIC_SANITY_DATASET=
+SANITY_API_TOKEN=            # 쓰기용, 서버에서만 사용
+ADMIN_PASSWORD=
+AUTH_USER= / AUTH_PASS=      # 문의 메일 발송용 계정 정보 (Gmail 앱 비밀번호 등)
+```
