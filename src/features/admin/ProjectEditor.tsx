@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type ChangeEvent } from "react";
+import { useEffect, useRef, useState, type ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { FiArrowLeft, FiImage, FiSave, FiSend, FiUploadCloud } from "react-icons/fi";
@@ -63,6 +63,12 @@ function toForm(project?: Project): ProjectForm {
   };
 }
 
+function isSameForm(a: ProjectForm, b: ProjectForm): boolean {
+  // ProjectForm 의 값은 모두 원시값(string/boolean)이라 키별 === 비교로 충분합니다.
+  // Object.keys 는 string[] 을 반환하므로 ProjectForm 의 키 목록으로 단언합니다.
+  return (Object.keys(a) as (keyof ProjectForm)[]).every((key) => a[key] === b[key]);
+}
+
 function toProjectInput(form: ProjectForm, slug?: string, assetId?: string): ProjectInput {
   return {
     ...form,
@@ -109,23 +115,30 @@ export default function ProjectEditor({ initialProject }: Props) {
   const isEdit = initialProject !== undefined;
   const router = useRouter();
 
-  const [form, setForm] = useState<ProjectForm>(() => toForm(initialProject));
+  // 변경 여부 비교 기준. 첫 렌더 때 한 번만 만들고 바꾸지 않습니다.
+  const [initialForm] = useState<ProjectForm>(() => toForm(initialProject));
+  const [form, setForm] = useState<ProjectForm>(initialForm);
   const [thumbnail, setThumbnail] = useState<Thumbnail>({ previewUrl: initialProject?.image ?? "" });
   const [isUploadingThumbnail, setIsUploadingThumbnail] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [isDirty, setIsDirty] = useState<boolean>(false);
+  /** 사용자가 "나가기"를 이미 확인했으면 브라우저 이탈 경고를 다시 띄우지 않기 위한 플래그 */
+  const hasConfirmedLeaveRef = useRef<boolean>(false);
 
-  // 저장하지 않은 변경사항이 있으면 새로고침 / 탭 닫기 전에 브라우저 확인창을 띄웁니다.
+  // 입력을 원래 값으로 되돌리면 변경 없음으로 보도록, 상태로 기억하지 않고 매 렌더마다 계산합니다.
+  const isDirty: boolean = thumbnail.assetId !== undefined || !isSameForm(form, initialForm);
+
+  // 저장하지 않은 변경사항이 있으면 새로고침 / 탭 닫기 / 사이트 밖으로 이동 전에 브라우저 확인창을 띄웁니다.
   useEffect(() => {
     if (!isDirty) return;
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => e.preventDefault();
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (!hasConfirmedLeaveRef.current) e.preventDefault();
+    };
     window.addEventListener("beforeunload", handleBeforeUnload);
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [isDirty]);
 
   const updateField = <K extends keyof ProjectForm>(key: K, value: ProjectForm[K]) => {
     setForm((prev) => ({ ...prev, [key]: value }));
-    setIsDirty(true);
   };
 
   const handleThumbnailUpload = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -136,7 +149,6 @@ export default function ProjectEditor({ initialProject }: Props) {
     try {
       const { assetId, url } = await adminApi.uploadImage(file);
       setThumbnail({ previewUrl: url, assetId });
-      setIsDirty(true);
     } catch (error) {
       toast.error(getErrorMessage(error, "썸네일 업로드에 실패했습니다."));
     } finally {
@@ -159,7 +171,6 @@ export default function ProjectEditor({ initialProject }: Props) {
         await adminApi.createProject(input);
       }
 
-      setIsDirty(false);
       toast.success(isEdit ? "수정이 완료되었습니다." : "새 프로젝트가 발행되었습니다.");
       router.push("/");
       router.refresh();
@@ -175,6 +186,9 @@ export default function ProjectEditor({ initialProject }: Props) {
 
   const handleBack = () => {
     if (isDirty && !confirm("저장하지 않은 변경사항이 있습니다. 정말 나가시겠어요?")) return;
+    // 주소창으로 바로 들어온 경우 router.back() 이 사이트 밖으로 나가며 beforeunload 가 다시 발생하므로,
+    // 이미 확인받은 이탈임을 표시해 경고가 두 번 뜨지 않게 합니다.
+    hasConfirmedLeaveRef.current = true;
     router.back();
   };
 

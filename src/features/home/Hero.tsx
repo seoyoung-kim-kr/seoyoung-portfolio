@@ -10,14 +10,14 @@ export default function Hero() {
           Frontend Developer
         </span>
 
-        <h2 className="text-2xl xs:text-3xl sm:text-5xl font-extrabold tracking-tight text-brand-dark dark:text-brand-light mb-4 break-keep">
+        <h1 className="text-2xl xs:text-3xl sm:text-5xl font-extrabold tracking-tight text-brand-dark dark:text-brand-light mb-4 break-keep">
           안녕하세요, 프론트엔드 개발자
           <br />
           <span className="bg-linear-to-r from-brand-accent via-brand-dark to-brand-pink-dark dark:from-brand-muted dark:to-brand-pink bg-clip-text text-transparent">
             김서영{" "}
           </span>
           입니다.
-        </h2>
+        </h1>
 
         <p className="text-sm sm:text-lg text-brand-dark/80 dark:text-brand-light/80 max-w-xl mb-8 leading-relaxed font-normal break-keep">
           흔들림 없는 컴포넌트 아키텍처와 최적화된 성능을 구축합니다.

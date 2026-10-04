@@ -98,9 +98,9 @@ export default function Header() {
             height={32}
             className="group-hover:scale-105 transition-transform duration-300 object-contain w-7 h-7 sm:w-8 sm:h-8"
           />
-          <h1 className="text-lg sm:text-xl font-bold tracking-tight text-brand-dark dark:text-brand-light group-hover:text-brand-accent transition-colors">
+          <span className="text-lg sm:text-xl font-bold tracking-tight text-brand-dark dark:text-brand-light group-hover:text-brand-accent transition-colors">
             Seoyoung<span className="text-brand-pink">.</span>
-          </h1>
+          </span>
         </Link>
 
         {/* Desktop Navigation (sm and larger) */}
