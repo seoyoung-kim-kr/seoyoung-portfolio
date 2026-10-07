@@ -28,22 +28,23 @@ const SKILL_CATEGORIES: SkillCategory[] = [
       "Next JS",
       "Shadcn UI",
       "Tailwind CSS",
+      "Zustand",
       "TanStack Query / Table / Virtual",
       "react-hook-form",
-      "Recharts",
       "dnd-kit",
       "Zod",
+      "Vitest",
     ],
   },
   {
     title: "Infra/DB",
     Icon: FiDatabase,
-    coreSkills: ["FastAPI", "SQLAlchemy", "PostgreSQL", "Sanity", "Docker"],
+    coreSkills: ["FastAPI", "SQLAlchemy", "PostgreSQL", "Docker"],
   },
   {
     title: "ETC",
     Icon: FiTool,
-    coreSkills: ["Git", "ESLint / Prettier"],
+    coreSkills: ["Git", "GitLab CI", "ESLint / Prettier", "Sanity"],
   },
 ];
 
