@@ -22,18 +22,7 @@ export const CAREER_TIMELINE = [
     highlights: [
       "바닐라 JS 레거시 8개를 React 단일 플랫폼으로 통합(이후 TS 점진 전환), FSD 아키텍처 및 공용 위젯 체계를 설계해 29개 페이지로 확장",
       "TS 점진 전환 주도, 권한 서버 전환 FE 담당, Vitest·MR 검증 도입",
-      "FastAPI로 공지 기능 API를 직접 설계·배포해 단독으로 E2E 릴리즈 완수",
       "바닐라 JS 환경에서 차트 27개 대시보드 및 메일 리포팅 자동화 구축 => React 전환 프로젝트로 이어짐",
-    ],
-  },
-  {
-    company: "(주)썬더소프트코리아",
-    department: "FR1팀",
-    role: "인턴 (Intern)",
-    period: "2022.07.01 ~ 2022.12.31",
-    isCurrent: false,
-    highlights: [
-      "Anritsu 및 Keysight 전문 측정 장비를 활용한 이동통신 프로토콜 테스트 수행 및 회귀 테스트 결함 데이터 검증",
     ],
   },
 ];

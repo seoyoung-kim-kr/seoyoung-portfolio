@@ -1,5 +1,5 @@
 import type { IconType } from "react-icons";
-import { FiCode, FiLayers, FiTool, FiDatabase } from "react-icons/fi";
+import { FiCode, FiLayers, FiTool } from "react-icons/fi";
 import GlassCard from "@/src/shared/ui/GlassCard";
 import SkillBadge from "@/src/shared/ui/SkillBadge";
 
@@ -17,7 +17,7 @@ const SKILL_CATEGORIES: SkillCategory[] = [
   {
     title: "Language",
     Icon: FiCode,
-    coreSkills: ["JavaScript", "TypeScript", "Python"],
+    coreSkills: ["JavaScript", "TypeScript"],
   },
   {
     title: "Frontend",
@@ -37,11 +37,6 @@ const SKILL_CATEGORIES: SkillCategory[] = [
     ],
   },
   {
-    title: "Infra/DB",
-    Icon: FiDatabase,
-    coreSkills: ["FastAPI", "SQLAlchemy", "PostgreSQL", "Docker"],
-  },
-  {
     title: "ETC",
     Icon: FiTool,
     coreSkills: ["Git", "GitLab CI", "ESLint / Prettier", "Sanity"],
@@ -55,7 +50,7 @@ export default function TechStackSection() {
         Skills
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
         {SKILL_CATEGORIES.map(({ title, description, Icon, coreSkills, experiencedSkills = [] }) => (
           <GlassCard
             key={title}
