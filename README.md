@@ -54,9 +54,17 @@ studio/                     Sanity Studio (schemaTypes: post, techStack — tech
   - 관리자 화면의 가드(`AdminGuard`)는 UX용이고, 실제 권한 검사는 API의 `adminRoute`에서 합니다.
   - 쓰기는 서버 Route Handler에서만 Sanity 토큰을 사용하므로 토큰이 클라이언트에 노출되지 않습니다.
 - **API 규약** — 모든 내부 API는 `{ success: true, ...data }` / `{ success: false, message }` 형태로 응답하고, 요청 body는 서버에서 yup 스키마로 검증합니다(400 · 401 · 404 · 500).
-- **캐시** — 읽기 쿼리는 60초 ISR입니다. 관리자 화면에서 저장하면 `revalidatePath`로 즉시 반영되고, Studio에서 직접 고친 내용은 1분 안에 반영됩니다.
+- **캐시** — 정적 생성 + 저장 시 재검증입니다. 아래 [캐시 전략](#캐시-전략)을 참고하세요.
 - **정렬** — 프로젝트는 `order` 오름차순(값이 없으면 99), 같으면 시작일 내림차순으로 노출됩니다. `/sy-admin/order`에서 일괄 수정합니다.
 - **이미지** — 썸네일과 본문 이미지는 관리자 에디터에서 Sanity Asset으로 업로드합니다. 본문 이미지는 업로드 후 마크다운 코드를 복사해 본문에 붙여 넣는 흐름입니다.
+
+## 캐시 전략
+
+- **정적 생성** — 홈과 프로젝트 상세(`generateStaticParams`)는 빌드 때 정적으로 생성됩니다. 프로젝트 조회는 시간 기반 재검증 없이 캐시되고 `projects` 태그가 붙습니다.
+- **저장 시 재검증** — 콘텐츠가 바뀌는 경로는 관리자 페이지뿐이므로, 쓰기 API(`api/posts`)가 저장에 성공하면 `revalidateTag("projects", { expire: 0 })`로 캐시를 즉시 만료시킵니다. 다음 요청부터 새 내용이 보입니다.
+  - `updateTag`는 Server Action 전용이라 Route Handler에서 쓸 수 없고, `revalidateTag(tag, "max")`는 stale-while-revalidate라 저장 직후 첫 요청에 이전 내용이 나가므로 `expire: 0`을 씁니다.
+  - Studio에서 직접 고친 내용은 자동으로 반영되지 않습니다(관리자 페이지에서 저장하면 반영).
+- **토큰은 서버 전용** — 공개 조회는 토큰 없이 published 문서만 읽고, `SANITY_API_TOKEN`은 쓰기 API와 쓰기 직전 조회(캐시 안 함)에서만 사용합니다.
 
 ## 로컬 실행
 

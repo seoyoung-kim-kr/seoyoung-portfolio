@@ -20,7 +20,7 @@ async function findProjectDocumentIds(idOrSlug: string): Promise<string[]> {
   const ids = await sanityFetch<string[]>(
     FIND_PROJECT_IDS_QUERY,
     { id: idOrSlug },
-    { revalidate: false, withToken: true }
+    { noStore: true, withToken: true }
   );
   if (ids.length === 0) throw new ProjectNotFoundError(idOrSlug);
   return ids;

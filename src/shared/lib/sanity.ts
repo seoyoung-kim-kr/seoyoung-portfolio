@@ -17,8 +17,13 @@ const API_BASE = `https://${SANITY_CONFIG.projectId}.api.sanity.io/v${SANITY_CON
 type GroqParams = Record<string, string | number | boolean>;
 
 type SanityFetchOptions = {
-  /** ISR 재검증 주기(초). `false` 이면 캐시하지 않습니다. */
-  revalidate?: number | false;
+  /**
+   * 캐시 태그. 응답은 시간 기반 재검증 없이 캐시되고,
+   * 쓰기 후 `revalidateTag(tag, ...)` 로 무효화합니다.
+   */
+  tags?: string[];
+  /** `true` 이면 캐시하지 않고 매번 조회합니다. 쓰기 직전 조회처럼 최신 값이 필요할 때 사용합니다. */
+  noStore?: boolean;
   /** 토큰을 사용해 draft 문서까지 조회할지 여부 */
   withToken?: boolean;
 };
@@ -42,11 +47,12 @@ function buildQueryUrl(query: string, params: GroqParams): string {
 export async function sanityFetch<T>(
   query: string,
   params: GroqParams = {},
-  { revalidate = 60, withToken = false }: SanityFetchOptions = {}
+  { tags, noStore = false, withToken = false }: SanityFetchOptions = {}
 ): Promise<T> {
   const res = await fetch(buildQueryUrl(query, params), {
     headers: withToken ? { Authorization: `Bearer ${requireToken()}` } : undefined,
-    ...(revalidate === false ? { cache: "no-store" } : { next: { revalidate } }),
+    // Next 16 의 fetch 기본값은 캐시하지 않으므로, 캐시할 때는 force-cache 를 명시합니다.
+    ...(noStore ? { cache: "no-store" } : { cache: "force-cache", next: { tags } }),
   });
 
   if (!res.ok) {
