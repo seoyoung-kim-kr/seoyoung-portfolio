@@ -1,7 +1,7 @@
-import { revalidatePath } from "next/cache";
 import { apiOk, readJsonBody } from "@/src/shared/lib/apiResponse";
 import { adminRoute } from "@/src/features/admin/adminRoute";
 import { deleteProject, updateProject } from "@/src/features/projects/mutations";
+import { expireProjectsCache } from "@/src/features/projects/queries";
 import { parseBody, projectPatchSchema } from "@/src/features/projects/projectInput";
 
 type Context = { params: Promise<{ id: string }> };
@@ -12,7 +12,7 @@ export const PUT = adminRoute(async (req: Request, { params }: Context) => {
   const patch = await parseBody(projectPatchSchema, await readJsonBody(req));
   await updateProject(id, patch);
 
-  revalidatePath("/", "layout");
+  expireProjectsCache();
   return apiOk({});
 });
 
@@ -21,6 +21,6 @@ export const DELETE = adminRoute(async (_req: Request, { params }: Context) => {
   const { id } = await params;
   await deleteProject(id);
 
-  revalidatePath("/", "layout");
+  expireProjectsCache();
   return apiOk({});
 });

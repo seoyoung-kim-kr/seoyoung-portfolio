@@ -1,6 +1,10 @@
+import { revalidateTag } from "next/cache";
 import { cache } from "react";
 import { sanityFetch } from "@/src/shared/lib/sanity";
 import { DEFAULT_PROJECT_ORDER, type Project, type ProjectWithNeighbors } from "./types";
+
+/** 프로젝트 조회 캐시 태그. 쓰기 API 가 저장 후 expireProjectsCache 로 무효화합니다. */
+const PROJECTS_CACHE_TAG = "projects";
 
 const ALL_PROJECTS_QUERY = `
   *[_type == "post"] | order(coalesce(order, ${DEFAULT_PROJECT_ORDER}) asc, startDate desc) {
@@ -24,7 +28,18 @@ const ALL_PROJECTS_QUERY = `
 `;
 
 /** 같은 요청 안에서 여러 컴포넌트가 호출해도 한 번만 조회하도록 React cache 로 감쌉니다. */
-export const getAllProjects = cache(() => sanityFetch<Project[]>(ALL_PROJECTS_QUERY));
+export const getAllProjects = cache(() =>
+  sanityFetch<Project[]>(ALL_PROJECTS_QUERY, {}, { tags: [PROJECTS_CACHE_TAG] })
+);
+
+/**
+ * 저장 직후 다음 요청부터 새 내용이 보이도록 프로젝트 캐시를 즉시 만료시킵니다. (Route Handler 에서 호출)
+ * - updateTag 는 Server Action 에서만 호출할 수 있어 Route Handler 에서는 에러가 납니다.
+ * - revalidateTag(tag, "max") 는 stale-while-revalidate 라 저장 직후 첫 요청에는 이전 내용이 나갑니다.
+ */
+export function expireProjectsCache(): void {
+  revalidateTag(PROJECTS_CACHE_TAG, { expire: 0 });
+}
 
 /** 잘못된 % 시퀀스(예: "abc%E0")는 URIError 를 던지므로, 그 경우 원본 문자열을 그대로 사용합니다. */
 function safeDecodeURIComponent(value: string): string {

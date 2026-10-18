@@ -1,7 +1,7 @@
-import { revalidatePath } from "next/cache";
 import { apiOk, readJsonBody } from "@/src/shared/lib/apiResponse";
 import { adminRoute } from "@/src/features/admin/adminRoute";
 import { createProject, updateProjectOrders } from "@/src/features/projects/mutations";
+import { expireProjectsCache } from "@/src/features/projects/queries";
 import {
   parseBody,
   projectInputSchema,
@@ -13,7 +13,7 @@ export const POST = adminRoute(async (req: Request) => {
   const input = await parseBody(projectInputSchema, await readJsonBody(req));
   const created = await createProject(input);
 
-  revalidatePath("/", "layout");
+  expireProjectsCache();
   return apiOk(created, { status: 201 });
 });
 
@@ -22,6 +22,6 @@ export const PATCH = adminRoute(async (req: Request) => {
   const input = await parseBody(projectOrderSchema, await readJsonBody(req));
   await updateProjectOrders(input);
 
-  revalidatePath("/", "layout");
+  expireProjectsCache();
   return apiOk({});
 });
