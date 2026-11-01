@@ -11,6 +11,8 @@ export const CAREER_TIMELINE = [
     isCurrent: true,
     highlights: [
       "소속 법인 변경으로 이관. 아래 썬더소프트코리아와 같은 팀에서 같은 업무를 이어서 수행 중",
+      "FE 중앙 룰셋 기반 권한을 서버 권한 API 기반으로 7단계에 걸쳐 전환 (FE 담당, 권한 DB · API는 BE 구현)",
+      "AI를 활용한 권한 테스트 구축, Vitest · React Testing Library 도입, GitLab CI 커밋 · MR 자동 검증 적용",
     ],
   },
   {
@@ -20,9 +22,10 @@ export const CAREER_TIMELINE = [
     period: "2023.01 ~ 2026.09",
     isCurrent: false,
     highlights: [
-      "바닐라 JS 레거시 8개를 React 단일 플랫폼으로 통합(이후 TS 점진 전환), FSD 아키텍처 및 공용 위젯 체계를 설계해 29개 페이지로 확장",
-      "TS 점진 전환 주도, 권한 서버 전환 FE 담당, Vitest·MR 검증 도입",
-      "바닐라 JS 환경에서 차트 27개 대시보드 및 메일 리포팅 자동화 구축 => React 전환 프로젝트로 이어짐",
+      "바닐라 JS 레거시 8개를 React 단일 플랫폼으로 통합, FSD 아키텍처 및 공용 위젯 체계를 설계해 29개 페이지로 확장",
+      "화면 66곳의 권한 분기를 FE 중앙 룰셋과 공용 판정 함수로 통합",
+      "JS 코드베이스의 TS 점진 전환 주도 (신규 코드부터 적용, 전환 진행 중)",
+      "바닐라 JS 환경에서 차트 27개 대시보드 구축, 메일 리포트 자동화 리팩토링 · 운영 => React 전환 프로젝트로 이어짐",
     ],
   },
 ];
