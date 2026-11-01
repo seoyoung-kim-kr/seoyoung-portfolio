@@ -7,7 +7,7 @@ export default function Hero() {
       <div className="max-w-3xl mx-auto flex flex-col items-center text-center">
         {/* Headline & Bio */}
         <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold bg-brand-pink/40 text-brand-dark dark:text-brand-light border border-brand-pink/60 mb-4 shadow-sm">
-          Frontend Developer
+          Frontend Developer · 4년 차
         </span>
 
         <h1 className="text-2xl xs:text-3xl sm:text-5xl font-extrabold tracking-tight text-brand-dark dark:text-brand-light mb-4 break-keep">
@@ -19,8 +19,10 @@ export default function Hero() {
           입니다.
         </h1>
 
-        <p className="text-sm sm:text-lg text-brand-dark/80 dark:text-brand-light/80 max-w-xl mb-8 leading-relaxed font-normal break-keep">
-          흔들림 없는 컴포넌트 아키텍처와 최적화된 성능을 구축합니다.
+        <p className="text-sm sm:text-lg text-brand-dark/80 dark:text-brand-light/80 max-w-2xl mb-8 leading-relaxed font-normal break-keep">
+          레거시 사이트 8개를 React 단일 플랫폼으로 통합하고, 운영 중인 코드베이스를
+          단계적으로 개선해 왔습니다. 공용 위젯 · 상태 관리 · 권한 구조를 설계하고
+          구현합니다.
         </p>
 
         {/* Action Buttons */}

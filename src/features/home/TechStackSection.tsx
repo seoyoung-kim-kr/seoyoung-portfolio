@@ -34,6 +34,7 @@ const SKILL_CATEGORIES: SkillCategory[] = [
       "dnd-kit",
       "Zod",
       "Vitest",
+      "React Testing Library",
     ],
   },
   {
