@@ -12,8 +12,12 @@ export default function HomePage() {
     <>
       <Hero />
       <Container className="space-y-10 pb-16">
-        {/* 1. Core Experience */}
-        <section id="highlights" className="scroll-mt-24">
+        {/* 1. 핵심 지표 */}
+        <section
+          id="highlights"
+          aria-label="핵심 지표"
+          className="scroll-mt-24 -mt-6 sm:-mt-12"
+        >
           <HighlightsSection />
         </section>
 

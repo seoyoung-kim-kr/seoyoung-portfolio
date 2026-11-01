@@ -9,7 +9,7 @@
 
 ## 주요 기능
 
-- **공개 페이지** — 홈(핵심 경험 · About · Skills · Projects · Career), 프로젝트 상세(마크다운), 문의 폼
+- **공개 페이지** — 홈(핵심 지표 · About · Skills · Projects · Career), 프로젝트 상세(마크다운), 문의 폼
 - **관리자 페이지** (`/sy-admin`) — 프로젝트 작성 · 수정 · 삭제, 정렬 순서 일괄 저장, 이미지 업로드, 마크다운 Write/Preview 에디터
 - **SEO** — 루트 metadata, 상세 페이지 `generateMetadata`, `sitemap.ts`, `robots.ts`
 - **다크 모드** — `.dark` 클래스 기반, `<head>` 인라인 스크립트로 첫 페인트 전에 적용
@@ -31,7 +31,7 @@
 
 ```
 app/
-  page.tsx                  홈 (Core Experience · About · Skills · Projects · Career)
+  page.tsx                  홈 (핵심 지표 · About · Skills · Projects · Career)
   projects/                 프로젝트 상세 ([slug]) · 목록 경로는 홈 #projects 로 리다이렉트
   contact/                  문의 폼
   sy-admin/                 관리자 — 글 작성(write) · 수정(edit/[slug]) · 정렬(order)
