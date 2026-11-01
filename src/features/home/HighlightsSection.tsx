@@ -48,7 +48,7 @@ const HIGHLIGHTS: Highlight[] = [
     label: "권한 체계",
     value: "FE 중앙화 → 서버 기반 전환",
     description:
-      "화면 67곳의 권한 분기를 중앙 룰셋으로 통합한 뒤, 7단계에 걸쳐 서버 권한 API 기반으로 전환했습니다.",
+      "화면 66곳의 권한 분기를 중앙 룰셋으로 통합한 뒤, 7단계에 걸쳐 서버 권한 API 기반으로 전환했습니다.",
     href: PERMISSION_PROJECT_HREF,
   },
 ];
